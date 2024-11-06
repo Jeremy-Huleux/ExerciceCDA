@@ -13,7 +13,8 @@ public class Main {
 
         System.out.println("Hello world!");
         Entreprise entreprise1 = new Entreprise("ZaeloTech");
-
+        Employe emp = new Employe();
+        System.out.println(emp);
 
 
 //        entreprise1.forEach(employe -> {

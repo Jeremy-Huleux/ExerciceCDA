@@ -22,6 +22,7 @@ public class Entreprise {
     public void GenereEmploye(int nb){
         for(int i=0; i<nb ; i++){
             Employe emp = new Employe();
+            AjoutEmployee(emp);
         }
     }
 
