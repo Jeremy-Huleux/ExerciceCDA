@@ -5,8 +5,7 @@ import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.Period;
 import java.time.ZoneId;
-import java.util.Calendar;
-import java.util.Date;
+import java.util.*;
 
 public class Employe {
     private String nom;
@@ -87,7 +86,42 @@ public class Employe {
         this.salaire = salaire;
         this.service = service;
     }
+    public Employe() {
+        this.nom = generationNom();
+        this.prenom = generationPrenom();
+        try{
+            this.dateEmbauche = formatDateFR.parse(generationDateEmbauche());
+            this.localdateEmbauche = dateEmbauche
+                    .toInstant() // Convertit Date en Instant
+                    .atZone(ZoneId.systemDefault()) // Obtient le fuseau horaire par défaut
+                    .toLocalDate(); // Convertit en LocalDate
+            this.anneeAncienneteAuPrime = Period.between(localdateEmbauche, jourDePrime).getYears();
+        } catch (ParseException e) {
+            this.dateEmbauche = new Date();
+        }
+        this.poste = generationPoste();
+        this.salaire = generationSalaire();
+        this.service = generationService();
+    }
 
+    public String generationNom(){
+        // Fonction pour choisir un nom aléatoirement dans une liste
+        // Créer une liste de noms
+
+        List<String> noms = Arrays.asList(
+                "Tartempion", "Bricoleur", "Trucmuche", "Duroc", "Lapinou", "Foufou", "Biscotte", "Gouzi-Gouzi",
+                "Gribouille", "Pommier", "Boule-de-Gomme", "Tigrou", "Pistache", "Gâteau-de-Lune", "Zézette",
+                "Roudoudou", "Chocolatine", "Chouquette", "Pépette", "Cacahuète", "Poil-de-Carotte", "Ficelle",
+                "Pouet-Pouet", "Papillon", "Brindille", "Boulot-Tordu", "Bouchon-de-Dinde", "Poulet-Frit",
+                "Boudin-Noir", "Lollipop", "Paprika", "Carambar", "Gloubiboulga", "Ravioli", "Maracudja", "Bananes-en-Mousse",
+                "Saucisson", "Moustache", "Fleur-de-Lys", "Chaussette", "Pastèque", "Bananito", "Clafoutis", "Barbapapa",
+                "Souricette", "Moufette", "Bazar", "Nénuphar", "Oursin", "Framboise", "Crêpe-Suzette"
+        );
+
+            Random random = new Random();  // Création de l'objet Random
+            int index = random.nextInt(noms.size());  // Choisir un index aléatoire dans la liste
+            return noms.get(index);  // Retourner le nom correspondant à cet index
+    }
 
     @Override
     public String toString() {

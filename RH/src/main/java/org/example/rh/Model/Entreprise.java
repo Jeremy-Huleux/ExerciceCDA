@@ -19,6 +19,12 @@ public class Entreprise {
     public void AjoutEmployee(Employe emp){
         this.listEmploye.add(emp);
     }
+    public void GenereEmploye(int nb){
+        for(int i=0; i<nb ; i++){
+            Employe emp = new Employe();
+        }
+    }
+
     /*
 Afin de créer un reporting d’informations sur les employés de l’entreprise,
 établir une liste (array) d’employés en y ajoutant les 5 objets que vous venez de créer.
