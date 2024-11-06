@@ -8,7 +8,7 @@ import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
 
-public class Employe {
+public class Employe implements Comparable<Employe>{
     private String nom;
 
     public String getNom() {
@@ -237,6 +237,15 @@ public class Employe {
                 " la somme de : " + salaire/12 + "€ de salaire mensuel\n" +
                 " pour un total de  : " + ((salaire/12)+primeAnciennete()+primeAnnuel()) + "€ de salaire\n";
     }
+    public int compareTo(Employe emp){
+        int r = this.nom.compareTo(emp.nom);
+
+        if(r==0) return this.nom.compareTo(emp.nom);
+
+        return r;
+
+    }
+
 
     @Override
     public String toString() {
