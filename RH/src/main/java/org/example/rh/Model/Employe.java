@@ -10,6 +10,55 @@ import java.util.Date;
 
 public class Employe {
     private String nom;
+
+    public String getNom() {
+        return nom;
+    }
+
+    public void setNom(String nom) {
+        this.nom = nom;
+    }
+
+    public String getPrenom() {
+        return prenom;
+    }
+
+    public void setPrenom(String prenom) {
+        this.prenom = prenom;
+    }
+
+    public Date getDateEmbauche() {
+        return dateEmbauche;
+    }
+
+    public void setDateEmbauche(Date dateEmbauche) {
+        this.dateEmbauche = dateEmbauche;
+    }
+
+    public String getPoste() {
+        return poste;
+    }
+
+    public void setPoste(String poste) {
+        this.poste = poste;
+    }
+
+    public int getSalaire() {
+        return salaire;
+    }
+
+    public void setSalaire(int salaire) {
+        this.salaire = salaire;
+    }
+
+    public String getService() {
+        return service;
+    }
+
+    public void setService(String service) {
+        this.service = service;
+    }
+
     private String prenom;
     private Date dateEmbauche;
     private String poste;
@@ -26,6 +75,11 @@ public class Employe {
         this.prenom = prenom;
         try{
             this.dateEmbauche = formatDateFR.parse(date);
+            this.localdateEmbauche = dateEmbauche
+                    .toInstant() // Convertit Date en Instant
+                    .atZone(ZoneId.systemDefault()) // Obtient le fuseau horaire par défaut
+                    .toLocalDate(); // Convertit en LocalDate
+            this.anneeAncienneteAuPrime = Period.between(localdateEmbauche, jourDePrime).getYears();
         } catch (ParseException e) {
             this.dateEmbauche = new Date();
         }
@@ -34,34 +88,7 @@ public class Employe {
         this.service = service;
     }
 
-    public Employe(String date){
-        try{
-            this.dateEmbauche = formatDateFR.parse(date);
-            this.localdateEmbauche = dateEmbauche
-                    .toInstant() // Convertit Date en Instant
-                    .atZone(ZoneId.systemDefault()) // Obtient le fuseau horaire par défaut
-                    .toLocalDate(); // Convertit en LocalDate
-            this.anneeAncienneteAuPrime = Period.between(localdateEmbauche, jourDePrime).getYears();
-        } catch (ParseException e) {
-            this.dateEmbauche = new Date();
-        }
-    }
-    public Employe(int salaire){
-        this.salaire = salaire;
-    }
-    public Employe(int salaire, String date){
-        this.salaire = salaire;
-        try{
-            this.dateEmbauche = formatDateFR.parse(date);
-            this.localdateEmbauche = dateEmbauche
-                    .toInstant() // Convertit Date en Instant
-                    .atZone(ZoneId.systemDefault()) // Obtient le fuseau horaire par défaut
-                    .toLocalDate(); // Convertit en LocalDate
-            this.anneeAncienneteAuPrime = Period.between(localdateEmbauche, jourDePrime).getYears();
-        } catch (ParseException e) {
-            this.dateEmbauche = new Date();
-        }
-    }
+
     @Override
     public String toString() {
         return "Employe{" +
@@ -104,22 +131,3 @@ public class Employe {
                 " pour un total de  : " + ((salaire/12)+primeAnciennete()+primeAnnuel()) + "€ de salaire\n";
     }
 }
-/*
-primeAnnuel = salaire annuel + 5%
-primeAnciennete = salaire annuel + (2*nbAnneeAnciennete)%
-
-prime versée le 30/11
-
-
-
-Chaque année, l’employé reçoit une prime calculée sur le salaire annuel (5% du brut) et sur l’ancienneté
-(2% du brut pour chaque année d’ancienneté). Cette prime est versée au 30/11 de chaque année. Dans la classe
-Employe, écrire le(s) méthode(s) permettant de déduire le montant de cette prime et de donner l’ordre de transfert
-à la banque le jour du versement. L’ordre de transfert à la banque sera juste un message écrit dans la console
-spécifiant que l’ordre de transfert a été envoyé à la banque avec mention du montant.
-Afin de tester les éléments ci-dessus, créer au minimum 5 objets Employe avec des informations sensiblement
-différentes. Ecrire dans le programme principal l’affichage du montant des primes de chaque employé.
-La date du versement de la prime doit également être vérifiée. Pour tester, fixer cette date à la date du jour,
-faire les conditions nécessaires dans le code et tester en changeant de date afin de voir si le message voulu s’affiche.
-
- */
