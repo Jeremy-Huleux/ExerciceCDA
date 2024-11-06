@@ -7,10 +7,12 @@ import java.time.Period;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class Employe implements Comparable<Employe>{
     private String nom;
-
+    private boolean cheques;
+    private ArrayList<Enfant> enfants;
     public String getNom() {
         return nom;
     }
@@ -70,7 +72,7 @@ public class Employe implements Comparable<Employe>{
     public LocalDate localdateEmbauche;
     public int anneeAncienneteAuPrime;
 
-    public Employe(String nom, String prenom, String date, String poste, int salaire, String service) {
+    public Employe(String nom, String prenom, String date, String poste, int salaire, String service, ArrayList<Enfant> enfants) {//arraylist enfant nullable
         this.nom = nom;
         this.prenom = prenom;
         try{
@@ -86,9 +88,12 @@ public class Employe implements Comparable<Employe>{
         this.poste = poste;
         this.salaire = salaire;
         this.service = service;
+        this.chequeOrNot();
+        this.enfants = enfants != null ? enfants : new ArrayList<Enfant>();
     }
-    public Employe() {
+    public Employe(ArrayList<Enfant> enfants) {
         this.nom = generationNom();
+        this.enfants = enfants != null ? enfants : new ArrayList<Enfant>();
         this.prenom = generationPrenom();
         try{
             this.dateEmbauche = formatDateFR.parse(generationDateEmbauche());
@@ -103,6 +108,8 @@ public class Employe implements Comparable<Employe>{
         this.poste = generationPoste();
         this.salaire = generationSalaire();
         this.service = generationService();
+        this.chequeOrNot();
+        //this.nbEnfant = generationNbEnfants();
     }
 
     public String generationNom(){
@@ -204,6 +211,11 @@ public class Employe implements Comparable<Employe>{
         return 10000 + (int)(Math.random() * (1000000000 - 10000));
     }
 
+    public int generationNbEnfants(){
+        Random random = new Random();
+        return random.nextInt(20);
+    }
+
     public String combienAnneeTravailtoString() {
         return "l'Employé" +
                 "à travailler " + combienAnneeTravail() +
@@ -237,15 +249,47 @@ public class Employe implements Comparable<Employe>{
                 " la somme de : " + salaire/12 + "€ de salaire mensuel\n" +
                 " pour un total de  : " + ((salaire/12)+primeAnciennete()+primeAnnuel()) + "€ de salaire\n";
     }
-    public int compareTo(Employe emp){
-        int r = this.nom.compareTo(emp.nom);
 
-        if(r==0) return this.nom.compareTo(emp.nom);
+    @Override
+    public int compareTo(Employe emp){
+        int r = this.service.compareTo(emp.service);
+
+        if(r==0) return this.service.compareTo(emp.service);
 
         return r;
 
     }
+    public void chequeOrNot(){
+        this.cheques = combienAnneeTravail() > 1 ?  true : false;
+    }
 
+    public int prixChequeNoel(){
+        AtomicInteger prixCheque = new AtomicInteger();
+        if (this.enfants.size() != 0){
+            this.enfants.forEach(enfant -> {
+                prixCheque.addAndGet(enfant.getAge() <= 10 ? 20 :
+                        (enfant.getAge() > 10 && enfant.getAge() <= 15) ? 30 :
+                                (enfant.getAge() > 15 && enfant.getAge() <= 18) ? 50 : 0);
+            });
+        }
+        return prixCheque.get();
+    }
+
+    public boolean isCheques() {
+        return cheques;
+    }
+
+    public void setCheques(boolean cheques) {
+        this.cheques = cheques;
+    }
+
+    public ArrayList<Enfant> getEnfants() {
+        return enfants;
+    }
+
+    public void setEnfants(ArrayList<Enfant> enfants) {
+        this.enfants = enfants;
+    }
 
     @Override
     public String toString() {
@@ -254,8 +298,24 @@ public class Employe implements Comparable<Employe>{
                 ", salaire=" + salaire +
                 ", poste='" + poste + '\'' +
                 ", dateEmbauche=" + dateEmbauche +
-                ", prenom='" + prenom + '\'' +
                 ", nom='" + nom + '\'' +
+                ", prenom='" + prenom + '\'' +
+                ", Cheque Vacance ? ='" + cheques + '\'' +
+                ", Cheque Noêl ? ='" + (prixChequeNoel() != 0 ? prixChequeNoel() : "aucun").toString() + '\'' +
+                ", combien de enfant ? ='" + enfants.size() + '\'' +
                 '}';
     }
+
 }
+       /*
+Chaque année, des chèques Noël sont distribués aux enfants des employés. Le montant du chèque
+Noël dépend de l’âge des enfants :
+ 20 euros pour les enfants de 0 à 10 ans
+ 30 euros pour les enfants de 11 à 15 ans.
+ 50 euros pour les enfants de 16 à 18 ans.
+Modifier le programme afin de gérer l’attribution des chèques Noël aux enfants des salariés. Afficher
+dans la console si l’employé a le droit d’avoir des chèques Noël (Oui/Non). Pour ce faire, établir les
+conditions nécessaires dans le programme. Et si la réponse est Oui, afficher dans la console combien
+de chèques de chaque montant sera distribué à l’employé. Si aucun chèque n’est distribué pour une
+tranche d’âge, ne pas afficher dans la console.
+*/

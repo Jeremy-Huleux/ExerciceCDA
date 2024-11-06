@@ -1,22 +1,40 @@
 package org.example.rh;
 
+import org.example.rh.Model.Agence;
 import org.example.rh.Model.Employe;
-import org.example.rh.Model.Entreprise;
+import org.example.rh.Model.Enfant;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 
 
 public class Main {
     public static void main(String[] args) {
 
         System.out.println("Hello world!");
-        Entreprise entreprise1 = new Entreprise("ZaeloTech");
-        entreprise1.GenereEmploye(5);
+        Agence agence1 = new Agence("ZaeloTech", true);
+        agence1.GenereEmploye(4);
+        Enfant enf1 = new Enfant("nom", "prenom", 10);
+        Enfant enf3 = new Enfant("nom", "prenom", 18);
+        Enfant enf2 = new Enfant("nom", "prenom", 15);
+        ArrayList<Enfant> enfants = new ArrayList<Enfant>();
+        enfants.add(enf1);
+        enfants.add(enf2);
+        enfants.add(enf3);
 
-        System.out.println(entreprise1.nbEmployee());
+        Employe emp1 = new Employe("String nom", "String prenom", "15/02/2020", "poste", 15000, "test", enfants);
+        agence1.AjoutEmployee(emp1);
+//        Employe emp1 = new Employe();
+//        Employe emp2 = new Employe();
+//        ArrayList<Employe> emps = new ArrayList<>();
+//        emps.add(emp1);
+//        emps.add(emp2);
+        agence1.alphaNom();
 
+        agence1.getListEmploye().forEach(emp -> {
+            System.out.println(emp);
+        });
+
+        agence1.typeRestauration();
 
 
 
