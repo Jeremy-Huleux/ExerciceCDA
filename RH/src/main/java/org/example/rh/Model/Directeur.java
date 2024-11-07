@@ -12,4 +12,13 @@ public class Directeur extends Employe{
     public Directeur(ArrayList<Enfant> enfants) {
         super(enfants);
     }
+    @Override
+    public double primeAnnuel(){
+        return super.primeAnnuel() + 0.07*super.getSalaire();
+    }
+    @Override
+    public double primeAnciennete(){
+        return super.primeAnciennete() + 0.03*super.getSalaire();
+    }
+
 }
