@@ -14,5 +14,7 @@ contextBridge.exposeInMainWorld('versions', {
 
 // Expose un autre objet 'electron' avec une fonction différente
 contextBridge.exposeInMainWorld('electronApp', {
-  getData: () => ipcRenderer.invoke('get-data')// Cette fonction envoie la requête 'get-data' au Main process
-})
+  getData: () => ipcRenderer.invoke('get-data'),// Cette fonction envoie la requête 'get-data' au Main process
+  getTime: () => ipcRenderer.invoke('request-time')
+});
+

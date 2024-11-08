@@ -1,7 +1,7 @@
 const { app, BrowserWindow, ipcMain } = require("electron/main");
 const path = require("node:path");
+const { callbackify } = require("node:util");
 
-console.log("Hello World !");
 
 const createWindow = () => {
   const win = new BrowserWindow({
@@ -25,6 +25,11 @@ app.whenReady().then(() => {
   // Crée la fenêtre lorsque l'application est prête
   createWindow();
 
+  // Gère la demande de l'heure
+  ipcMain.handle("request-time", () =>{
+    const currentTime = new Date().toLocaleTimeString();
+    return currentTime;
+  })
   // On peut également ajouter d'autres écouteurs d'événements ici si nécessaire
   app.on("activate", () => {
     if (BrowserWindow.getAllWindows().length === 0) createWindow();

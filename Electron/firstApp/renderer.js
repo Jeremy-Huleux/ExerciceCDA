@@ -12,8 +12,7 @@ const getDataFromMain = async () => {
 
 // Fonction qui affiche un message à l'utilisateur
 const displayMessage = (message) => {
-  const infoElement = document.getElementById('info');
-  infoElement.innerText = message; // affiche le message pour l'utilisateur
+  information.innerText = message; // affiche le message pour l'utilisateur
 }
 
 const handleClick = () => {
@@ -21,6 +20,17 @@ const handleClick = () => {
   getDataFromMain();
 };
 
+//Fonction qui affiche l'heure
+const afficheHeure = async () => {
+  try{
+    information.innerText =  `Heure actuelle : ${await electronApp.getTime()}`; 
+  } catch (error) {
+    console.error("Erreur lors de la recupération du l'heure system : ", error);
+  }
+}
+
+
 document.getElementById('getDataButton').addEventListener('click', handleClick);
+document.getElementById('getTime').addEventListener('click', afficheHeure);
 
 information.innerText = `Cette application utilise Chrome (v${versions.chrome()}), Node.js (v${versions.node()}), et Electron (v${versions.electron()})`
