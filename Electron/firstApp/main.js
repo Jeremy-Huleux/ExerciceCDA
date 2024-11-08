@@ -11,19 +11,26 @@ const createWindow = () => {
       preload: path.join(__dirname, "preload.js"),
     },
   });
-
   win.loadFile("index.html");
 };
 
-app.on("window-all-closed", () => {
-  if (process.platform !== "darwin") app.quit();
+// Défini le gestionnaire de l'IPC avant de créer la fenêtre ou dans le bloc whenReady
+// Gestionnaire de l'IPC pour recevoir une requête depuis le Renderer
+ipcMain.handle('get-data', () => {
+  return "Données envoyées depuis le Main process";  // Ceci est la réponse que j'envoies au Renderer 
 });
 
+
 app.whenReady().then(() => {
-  ipcMain.handle('ping', () => 'pong');
+  // Crée la fenêtre lorsque l'application est prête
   createWindow();
 
+  // On peut également ajouter d'autres écouteurs d'événements ici si nécessaire
   app.on("activate", () => {
     if (BrowserWindow.getAllWindows().length === 0) createWindow();
   });
+});
+
+app.on("window-all-closed", () => {
+  if (process.platform !== "darwin") app.quit();
 });
