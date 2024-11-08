@@ -27,7 +27,7 @@ git clone https://github.com/Jeremy-Huleux/ExerciceCDA.git
 **Accédez au sous-dossier Electron :**
 
 ```bash
-cd Nom-du-repo/electron
+cd ExerciceCDA/electron
 ```
 
 **Installez Electron en tant que dépendance de développement :**
