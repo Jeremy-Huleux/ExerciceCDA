@@ -1,6 +1,8 @@
 package org.example.rh.demo;
 
 import javafx.application.Application;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -8,17 +10,24 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import org.controlsfx.control.Notifications;
+import org.example.rh.demo.DTO.Person;
+import org.example.rh.demo.Model.Agence;
+
 
 import java.io.IOException;
+
+
+import static org.example.rh.demo.Factory.PersonFactory.createPerson;
 
 public class HelloApplication extends Application {
     @Override
     public void start(Stage stage) throws IOException {
-        Person person = new Person();
+
         FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("hello-view.fxml"));
 
         /*
@@ -36,37 +45,6 @@ public class HelloApplication extends Application {
         button3.setOnAction(e -> suppressionFonction());
 
         /*
-        ------------------- TABLEAU -------------------
-         */
-
-        //creation du tableau
-        TableView tableau = new TableView();
-
-        //creation des colonnes
-        TableColumn<String, String> colonne1 = new TableColumn<>("Nom");
-        TableColumn<String, String> colonne2 = new TableColumn<>("Prenom");
-        TableColumn<String, String> colonne3 = new TableColumn<>("Agence");
-        TableColumn<String, String> colonne4 = new TableColumn<>("Poste");
-        TableColumn<String, String> colonne5 = new TableColumn<>("Service");
-        TableColumn<String, String> colonne6 = new TableColumn<>("Salaire");
-        //déclaration manuel des tailles de colonnes
-
-        /*
-        colonne1.setPrefWidth(133);
-        colonne2.setPrefWidth(133);
-        colonne3.setPrefWidth(133);
-        colonne4.setPrefWidth(133);
-        colonne5.setPrefWidth(133);
-        colonne6.setPrefWidth(133);
-        */
-        //ajuste automatiquement les tailles des colonnes pour faire la taille de l'app
-        tableau.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
-        //on ajoute les colonnes au tableau
-        tableau.getColumns().addAll(colonne1, colonne2, colonne3, colonne4, colonne5, colonne6);
-
-
-
-        /*
         ------------------- MENUTOP -------------------
          */
 
@@ -76,6 +54,50 @@ public class HelloApplication extends Application {
         menuTop.setAlignment(Pos.TOP_CENTER); // position center haut
         // on ajoute tous les button a notre "menu header"
         menuTop.getChildren().addAll(button, button2, button3);
+
+        /*
+        ------------------- TABLEAU -------------------
+         */
+
+        //creation du tableau
+        TableView<Person> tableau = new TableView();
+
+        //creation des colonnes
+        TableColumn<Person, String> nomColonne = new TableColumn<>("Nom");
+        TableColumn<Person, String> prenameColonne = new TableColumn<>("Prenom");
+        TableColumn<Person, String> agenceColonne = new TableColumn<>("Agence");
+        TableColumn<Person, String> posteColonne = new TableColumn<>("Poste");
+        TableColumn<Person, String> serviceColonne = new TableColumn<>("Service");
+        TableColumn<Person, String> salaireColonne = new TableColumn<>("Salaire");
+
+        //creation des données manuellement
+        Agence agence1 = new Agence("ZaeloTech", true);
+        agence1.GenereEmploye(44);
+
+        //creation d'une liste de données
+        ObservableList<Person> personnes = FXCollections.observableArrayList(
+                createPerson(agence1)
+        );
+
+        //creation des lignes de données
+        nomColonne.setCellValueFactory(new PropertyValueFactory<>("name"));
+        prenameColonne.setCellValueFactory(new PropertyValueFactory<>("prename"));
+        agenceColonne.setCellValueFactory(new PropertyValueFactory<>("agence"));
+        posteColonne.setCellValueFactory(new PropertyValueFactory<>("poste"));
+        serviceColonne.setCellValueFactory(new PropertyValueFactory<>("service"));
+        salaireColonne.setCellValueFactory(new PropertyValueFactory<>("salaire"));
+
+
+        //Ajout des données
+        tableau.setItems(personnes);
+
+        //ajuste automatiquement les tailles des colonnes pour faire la taille de l'app
+        tableau.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+        //on ajoute les colonnes au tableau
+        tableau.getColumns().addAll(nomColonne, prenameColonne, agenceColonne, posteColonne, serviceColonne, salaireColonne);
+
+
+
 
 
         /*

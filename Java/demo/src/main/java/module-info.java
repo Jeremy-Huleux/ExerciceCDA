@@ -8,4 +8,8 @@ module org.example.rh.demo {
 
     opens org.example.rh.demo to javafx.fxml;
     exports org.example.rh.demo;
+    exports org.example.rh.demo.Model;
+    opens org.example.rh.demo.Model to javafx.fxml;
+    exports org.example.rh.demo.DTO;
+    opens org.example.rh.demo.DTO to javafx.fxml;
 }
