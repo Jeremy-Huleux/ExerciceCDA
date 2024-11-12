@@ -6,6 +6,7 @@ import org.example.rh.demo.Model.Agence;
 import org.example.rh.demo.Model.Employe;
 import org.example.rh.demo.Model.Enfant;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 public class Person extends Employe {
@@ -17,7 +18,7 @@ public class Person extends Employe {
     private final SimpleIntegerProperty salaire;
     private final SimpleStringProperty agence;
 
-    public Person(String nom, String prenom, String date, String poste, int salaire, String service, ArrayList<Enfant> enfants, String agence) {
+    public Person(String nom, String prenom, LocalDate date, String poste, int salaire, String service, ArrayList<Enfant> enfants, String agence) {
         super(nom, prenom, date, poste, salaire, service, enfants);
         this.name = new SimpleStringProperty(nom);
         this.prename = new SimpleStringProperty(prenom);

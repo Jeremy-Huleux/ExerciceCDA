@@ -13,8 +13,48 @@ public class Employe implements Comparable<Employe>{
     private String nom;
     private boolean cheques;
     private ArrayList<Enfant> enfants;
+    private String prenom;
+    private LocalDate dateEmbauche;
+    private String poste;
+    private int salaire; //(en k € brut annuel)
+    private String service;
+    //public SimpleDateFormat formatDateFR = new SimpleDateFormat("dd/MM/yyyy");
+    public Date aujourdhui = new Date();
+    public LocalDate jourDePrime = LocalDate.of(recupAnnee(aujourdhui), 11, 30);
+    public LocalDate localdateEmbauche;
+    public int anneeAncienneteAuPrime;
+
+    public Employe(String name, String prename, LocalDate date, String poste, int salaire, String service, ArrayList<Enfant> enfants) {
+        this.nom = name;
+        this.prenom = prename;
+        // Convertir LocalDate en Date
+        this.dateEmbauche = date;
+        this.localdateEmbauche = date;
+        this.anneeAncienneteAuPrime = Period.between(localdateEmbauche, jourDePrime).getYears();
+        this.poste = poste;
+        this.salaire = salaire;
+        this.service = service;
+        this.chequeOrNot();
+        this.enfants = enfants != null ? enfants : new ArrayList<Enfant>();
+    }
+
+    public Employe(String name, String prename, LocalDate date, String poste, int salaire, String service) {
+        this.nom = name;
+        this.prenom = prename;
+        // Convertir LocalDate en Date
+        this.dateEmbauche = date;
+        this.localdateEmbauche = date;
+        this.anneeAncienneteAuPrime = Period.between(localdateEmbauche, jourDePrime).getYears();
+        this.poste = poste;
+        this.salaire = salaire;
+        this.service = service;
+        this.chequeOrNot();
+        this.enfants = enfants != null ? enfants : new ArrayList<Enfant>();
+    }
+
+
     public String getNom() {
-        return nom;
+        return this.nom;
     }
 
     public void setNom(String nom) {
@@ -22,20 +62,20 @@ public class Employe implements Comparable<Employe>{
     }
 
     public String getPrenom() {
-        return prenom;
+        return this.prenom;
     }
 
     public void setPrenom(String prenom) {
         this.prenom = prenom;
     }
 
-    public Date getDateEmbauche() {
+    public LocalDate getDateEmbauche() {
         return dateEmbauche;
     }
 
-    public void setDateEmbauche(Date dateEmbauche) {
-        this.dateEmbauche = dateEmbauche;
-    }
+//    public void setDateEmbauche(Date dateEmbauche) {
+//        this.dateEmbauche = dateEmbauche;
+//    }
 
     public String getPoste() {
         return poste;
@@ -61,50 +101,41 @@ public class Employe implements Comparable<Employe>{
         this.service = service;
     }
 
-    private String prenom;
-    private Date dateEmbauche;
-    private String poste;
-    private int salaire; //(en k € brut annuel)
-    private String service;
-    public SimpleDateFormat formatDateFR = new SimpleDateFormat("dd/MM/yyyy");
-    public Date aujourdhui = new Date();
-    public LocalDate jourDePrime = LocalDate.of(recupAnnee(aujourdhui), 11, 30);
-    public LocalDate localdateEmbauche;
-    public int anneeAncienneteAuPrime;
-
-    public Employe(String nom, String prenom, String date, String poste, int salaire, String service, ArrayList<Enfant> enfants) {//arraylist enfant nullable
-        this.nom = nom;
-        this.prenom = prenom;
-        try{
-            this.dateEmbauche = formatDateFR.parse(date);
-            this.localdateEmbauche = dateEmbauche
-                    .toInstant() // Convertit Date en Instant
-                    .atZone(ZoneId.systemDefault()) // Obtient le fuseau horaire par défaut
-                    .toLocalDate(); // Convertit en LocalDate
-            this.anneeAncienneteAuPrime = Period.between(localdateEmbauche, jourDePrime).getYears();
-        } catch (ParseException e) {
-            this.dateEmbauche = new Date();
-        }
-        this.poste = poste;
-        this.salaire = salaire;
-        this.service = service;
-        this.chequeOrNot();
-        this.enfants = enfants != null ? enfants : new ArrayList<Enfant>();
-    }
+//
+//
+//    public Employe(String nom,
+//                   String prenom,
+//                   String date,
+//                   String poste,
+//                   int salaire,
+//                   String service,
+//                   ArrayList<Enfant> enfants) {//arraylist enfant nullable
+//        this.nom = nom;
+//        this.prenom = prenom;
+//        try{
+//            this.dateEmbauche = formatDateFR.parse(date);
+//            this.localdateEmbauche = dateEmbauche
+//                    .toInstant() // Convertit Date en Instant
+//                    .atZone(ZoneId.systemDefault()) // Obtient le fuseau horaire par défaut
+//                    .toLocalDate(); // Convertit en LocalDate
+//            this.anneeAncienneteAuPrime = Period.between(localdateEmbauche, jourDePrime).getYears();
+//        } catch (ParseException e) {
+//            this.dateEmbauche = new Date();
+//        }
+//        this.poste = poste;
+//        this.salaire = salaire;
+//        this.service = service;
+//        this.chequeOrNot();
+//        this.enfants = enfants != null ? enfants : new ArrayList<Enfant>();
+//    }
+//
     public Employe(ArrayList<Enfant> enfants) {
         this.nom = generationNom();
         this.enfants = enfants != null ? enfants : new ArrayList<Enfant>();
         this.prenom = generationPrenom();
-        try{
-            this.dateEmbauche = formatDateFR.parse(generationDateEmbauche());
-            this.localdateEmbauche = dateEmbauche
-                    .toInstant() // Convertit Date en Instant
-                    .atZone(ZoneId.systemDefault()) // Obtient le fuseau horaire par défaut
-                    .toLocalDate(); // Convertit en LocalDate
-            this.anneeAncienneteAuPrime = Period.between(localdateEmbauche, jourDePrime).getYears();
-        } catch (ParseException e) {
-            this.dateEmbauche = new Date();
-        }
+        this.dateEmbauche = generationDateEmbauche();
+        this.localdateEmbauche = dateEmbauche; // Convertit en LocalDate
+        this.anneeAncienneteAuPrime = Period.between(localdateEmbauche, jourDePrime).getYears();
         this.poste = generationPoste();
         this.salaire = generationSalaire();
         this.service = generationService();
@@ -148,7 +179,7 @@ public class Employe implements Comparable<Employe>{
         int index = random.nextInt(prenoms.size());  // Choisir un index aléatoire dans la liste
         return prenoms.get(index);  // Retourner le nom correspondant à cet index
     }
-    public String generationDateEmbauche(){
+    public LocalDate generationDateEmbauche(){
         Random random = new Random();
         // Créer une date de base : ici, nous utilisons la date actuelle
         LocalDate today = LocalDate.now();
@@ -159,8 +190,8 @@ public class Employe implements Comparable<Employe>{
         // Pour plus de précision on réduis au niveau des mois ou des jours
         long daysBack = random.nextInt(365);  // Générer des jours aléatoires pour l'année choisie
         randomPastDate = randomPastDate.minusDays(daysBack);
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");//on regenere un formatteur car le format locadate a besoin d'un formateur DateTimeFormatter
-        return formatter.format(randomPastDate);
+        //DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");//on regenere un formatteur car le format locadate a besoin d'un formateur DateTimeFormatter
+        return randomPastDate;
     }
     public String generationPoste(){
 
@@ -223,8 +254,8 @@ public class Employe implements Comparable<Employe>{
     }
 
     public int combienAnneeTravail() {
-        int anneeAujourdhui = recupAnnee(aujourdhui);
-        int anneeEmbauche = recupAnnee(dateEmbauche);
+        int anneeAujourdhui = recupAnnee(aujourdhui);//java.util.Date.from(dateEmbauche.atStartOfDay(ZoneId.systemDefault()).toInstant());
+        int anneeEmbauche = recupAnnee(java.util.Date.from(dateEmbauche.atStartOfDay(ZoneId.systemDefault()).toInstant()));
 
         return anneeAujourdhui - anneeEmbauche;
 }
@@ -289,6 +320,10 @@ public class Employe implements Comparable<Employe>{
 
     public void setEnfants(ArrayList<Enfant> enfants) {
         this.enfants = enfants;
+    }
+
+    public Employe modifEmploye(Employe emp){
+        //TODO : Finir la modif du crud
     }
 
     @Override

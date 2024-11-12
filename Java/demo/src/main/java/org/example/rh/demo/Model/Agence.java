@@ -1,8 +1,15 @@
 package org.example.rh.demo.Model;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import org.example.rh.demo.DTO.Person;
 import org.example.rh.demo.Model.*;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
+import java.util.List;
+
+import static org.example.rh.demo.Factory.PersonFactory.createPerson;
 
 
 public class Agence {
@@ -11,7 +18,22 @@ public class Agence {
     private String codePostale;
     private String ville;
     private ArrayList<Employe> listEmploye = new ArrayList<>();
+    public ObservableList<Person> personnes = FXCollections.observableArrayList();
     private boolean restaurant;
+    private List<String> services = Arrays.asList(
+            "Informatique", "Ressources Humaines", "Marketing", "Ventes",
+            "Finance", "Développement", "Design", "Production",
+            "Logistique", "Support Client", "Direction Générale",
+            "Communication", "Juridique", "R&D", "Systèmes d'Information",
+            "Achats", "Commercial", "Gestion de Projet", "Qualité",
+            "Sécurité",
+            "Service Machine à Café", "Réparation de Post-it", "Équipe des Chaussettes Perdues",
+            "Détente et Bien-être", "Maintenance des Chaises de Bureau", "Coordination des Siestes",
+            "Réchauffement de Tasses", "Consultants en Bureau Calme", "Service Antivol de Stylos",
+            "Supervision des Cafés", "Gestion des Réunions Inutiles", "Sécurité des Cookies",
+            "Optimisation des Pauses Déjeuner", "Développement de Sourires", "Services de Motivation",
+            "Nettoyage de l'Espace Conférence", "Responsable de la Cohérence des Plantes"
+    );
 
     public Agence(String nom, boolean restaurant) {
         this.nom = nom;
@@ -19,7 +41,9 @@ public class Agence {
     }
     public void AjoutEmployee(Employe emp){
         this.listEmploye.add(emp);
+        this.personnes.add(createPerson(emp, this.nom));
     }
+
     public void GenereEmploye(int nb){
         for(int i=0; i<nb ; i++){
             ArrayList<Enfant> enfants = new ArrayList<>();
@@ -49,6 +73,14 @@ public class Agence {
 
         Collections.sort(listEmploye);
 
+    }
+
+    public void supprEmploye(){
+        this.listEmploye.remove(listEmploye.size()-1);
+        this.personnes.remove(personnes.size()-1);
+    }
+    public void modifEmploye(){
+        //OULAOULAOULAOULAOULAOULAOULAOULA
     }
 
     public int nbEmployee(){
@@ -95,16 +127,7 @@ public class Agence {
         this.nom = nom;
     }
 
-/*
-
-
-
-
-
---------------
-9 Un directeur est un employé comme un autre qui bénéficie d’un statut particulier. Chaque année, le
-directeur reçoit une prime calculée sur le salaire annuel (7% du brut) et sur l’ancienneté (3% du brut
-pour chaque année d’ancienneté). Cette prime est versée au 30/11 de chaque année. Créer la classe
-Directeur et gérer le calcul de la prime et le versement pour celui-ci.
- */
+    public List<String> getServices() {
+        return services;
+    }
 }

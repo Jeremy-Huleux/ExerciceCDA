@@ -8,23 +8,16 @@ import java.util.ArrayList;
 
 public class PersonFactory {
 
-    public static ArrayList<Person> createPerson(Agence agence) {
-        ArrayList<Person> listesPersonnes = new ArrayList<Person>();
-        String nomAgence = agence.getNom();
-        agence.getListEmploye().forEach(employe -> {
-            listesPersonnes.add(
-                    new Person(
+    public static Person createPerson(Employe employe, String agence) {
+        return  new Person(
                             employe.getNom(),
                             employe.getPrenom(),
+                            employe.getDateEmbauche(),
                             employe.getPoste(),
-                            employe.getService(),
                             employe.getSalaire(),
                             employe.getService(),
                             employe.getEnfants(),
-                            nomAgence
-                    )
-            );
-        });
-        return listesPersonnes;
+                            agence
+                    );
     }
 }

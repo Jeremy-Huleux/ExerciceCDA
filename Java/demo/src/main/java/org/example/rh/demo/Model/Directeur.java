@@ -1,11 +1,12 @@
 package org.example.rh.demo.Model;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 public class Directeur extends Employe{
 
 
-    public Directeur(String nom, String prenom, String date, String poste, int salaire, String service, ArrayList<Enfant> enfants) {
+    public Directeur(String nom, String prenom, LocalDate date, String poste, int salaire, String service, ArrayList<Enfant> enfants) {
         super(nom, prenom, date, poste, salaire, service, enfants);
     }
 
