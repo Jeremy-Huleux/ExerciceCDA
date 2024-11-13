@@ -5,6 +5,7 @@ module org.example.rh.demo {
     requires org.controlsfx.controls;
     requires com.dlsc.formsfx;
     requires java.management;
+    requires java.sql;
 
     opens org.example.rh.demo to javafx.fxml;
     exports org.example.rh.demo;

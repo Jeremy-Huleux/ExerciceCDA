@@ -18,16 +18,25 @@ public class Person extends Employe {
     private final SimpleIntegerProperty salaire;
     private final SimpleStringProperty agence;
 
-    public Person(String nom, String prenom, LocalDate date, String poste, int salaire, String service, ArrayList<Enfant> enfants, String agence) {
-        super(nom, prenom, date, poste, salaire, service, enfants);
+    public Person(long id, String nom, String prenom, LocalDate date, String poste, int salaire, String service, ArrayList<Enfant> enfants, String agence) {
+        super(id ,nom, prenom, date, poste, salaire, service, enfants);
         this.name = new SimpleStringProperty(nom);
         this.prename = new SimpleStringProperty(prenom);
         this.poste = new SimpleStringProperty(poste);
         this.service = new SimpleStringProperty(service);
         this.salaire = new SimpleIntegerProperty(salaire);
         this.agence = new SimpleStringProperty(agence);
-    }
 
+    }
+    public Person(long id, String nom, String prenom, LocalDate date, String poste, int salaire, String service, ArrayList<Enfant> enfants) {
+        super(id ,nom, prenom, date, poste, salaire, service, enfants);
+        this.name = new SimpleStringProperty(nom);
+        this.prename = new SimpleStringProperty(prenom);
+        this.poste = new SimpleStringProperty(poste);
+        this.service = new SimpleStringProperty(service);
+        this.salaire = new SimpleIntegerProperty(salaire);
+        this.agence = new SimpleStringProperty("");
+    }
 
     public String getName() {
         return name.get();

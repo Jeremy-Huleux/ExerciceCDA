@@ -10,6 +10,7 @@ import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class Employe implements Comparable<Employe>{
+    private long id;
     private String nom;
     private boolean cheques;
     private ArrayList<Enfant> enfants;
@@ -25,6 +26,22 @@ public class Employe implements Comparable<Employe>{
     public int anneeAncienneteAuPrime;
 
     public Employe(String name, String prename, LocalDate date, String poste, int salaire, String service, ArrayList<Enfant> enfants) {
+        this.id = genereId();
+        this.nom = name;
+        this.prenom = prename;
+        // Convertir LocalDate en Date
+        this.dateEmbauche = date;
+        this.localdateEmbauche = date;
+        this.anneeAncienneteAuPrime = Period.between(localdateEmbauche, jourDePrime).getYears();
+        this.poste = poste;
+        this.salaire = salaire;
+        this.service = service;
+        this.chequeOrNot();
+        this.enfants = enfants != null ? enfants : new ArrayList<Enfant>();
+    }
+
+    public Employe(long id, String name, String prename, LocalDate date, String poste, int salaire, String service, ArrayList<Enfant> enfants) {
+        this.id = id;
         this.nom = name;
         this.prenom = prename;
         // Convertir LocalDate en Date
@@ -39,6 +56,21 @@ public class Employe implements Comparable<Employe>{
     }
 
     public Employe(String name, String prename, LocalDate date, String poste, int salaire, String service) {
+        this.id = genereId();
+        this.nom = name;
+        this.prenom = prename;
+        // Convertir LocalDate en Date
+        this.dateEmbauche = date;
+        this.localdateEmbauche = date;
+        this.anneeAncienneteAuPrime = Period.between(localdateEmbauche, jourDePrime).getYears();
+        this.poste = poste;
+        this.salaire = salaire;
+        this.service = service;
+        this.chequeOrNot();
+        this.enfants = enfants != null ? enfants : new ArrayList<Enfant>();
+    }
+    public Employe(long id, String name, String prename, LocalDate date, String poste, int salaire, String service) {
+        this.id = id;
         this.nom = name;
         this.prenom = prename;
         // Convertir LocalDate en Date
@@ -130,6 +162,7 @@ public class Employe implements Comparable<Employe>{
 //    }
 //
     public Employe(ArrayList<Enfant> enfants) {
+        this.id = genereId();
         this.nom = generationNom();
         this.enfants = enfants != null ? enfants : new ArrayList<Enfant>();
         this.prenom = generationPrenom();
@@ -193,6 +226,10 @@ public class Employe implements Comparable<Employe>{
         //DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");//on regenere un formatteur car le format locadate a besoin d'un formateur DateTimeFormatter
         return randomPastDate;
     }
+    public long genereId(){
+        Random random = new Random();
+        return random.nextLong(999999999999999999L);  // Choisit un nombre aléatoire (entre 0 et 999999999999999999)
+    }
     public String generationPoste(){
 
         // Liste des postes occupés
@@ -217,7 +254,6 @@ public class Employe implements Comparable<Employe>{
         return postes.get(index);  // Retourner le nom correspondant à cet index
     }
     public String generationService(){
-
         // Liste des postes occupés
         List<String> services = Arrays.asList(
                 "Informatique", "Ressources Humaines", "Marketing", "Ventes",
@@ -233,7 +269,6 @@ public class Employe implements Comparable<Employe>{
                 "Optimisation des Pauses Déjeuner", "Développement de Sourires", "Services de Motivation",
                 "Nettoyage de l'Espace Conférence", "Responsable de la Cohérence des Plantes"
         );
-
         Random random = new Random();  // Création de l'objet Random
         int index = random.nextInt(services.size());  // Choisir un index aléatoire dans la liste
         return services.get(index);  // Retourner le nom correspondant à cet index
@@ -280,6 +315,19 @@ public class Employe implements Comparable<Employe>{
                 " la somme de : " + salaire/12 + "€ de salaire mensuel\n" +
                 " pour un total de  : " + ((salaire/12)+primeAnciennete()+primeAnnuel()) + "€ de salaire\n";
     }
+//    @Override
+//    public boolean equals(Object obj){
+//        if(this == obj){
+//            return true;
+//        }
+//        if(obj == null || getClass() != obj.getClass()){
+//            return false;
+//        }
+//        //TODO : finir equals avec idEmp
+//        //convertit l'objet en Emp pour accéder a ses attributs
+//        Employe other = (Employe) obj;
+//
+//    }
 
     @Override
     public int compareTo(Employe emp){
@@ -323,7 +371,17 @@ public class Employe implements Comparable<Employe>{
     }
 
     public Employe modifEmploye(Employe emp){
-        //TODO : Finir la modif du crud
+        this.nom = emp.getNom();
+        this.prenom = emp.getPrenom();
+        this.dateEmbauche = emp.getDateEmbauche();
+        this.localdateEmbauche = emp.localdateEmbauche;
+        this.anneeAncienneteAuPrime = Period.between(localdateEmbauche, jourDePrime).getYears();
+        this.poste = emp.getPoste();
+        this.salaire = emp.getSalaire();
+        this.service = emp.getService();
+        this.chequeOrNot();
+        this.enfants = enfants != null ? enfants : new ArrayList<Enfant>();
+        return emp;
     }
 
     @Override
@@ -341,6 +399,9 @@ public class Employe implements Comparable<Employe>{
                 '}';
     }
 
+    public long getId() {
+        return id;
+    }
 }
        /*
 Chaque année, des chèques Noël sont distribués aux enfants des employés. Le montant du chèque

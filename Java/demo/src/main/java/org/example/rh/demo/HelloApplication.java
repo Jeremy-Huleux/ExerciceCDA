@@ -14,6 +14,7 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import org.controlsfx.control.Notifications;
 import org.example.rh.demo.DTO.Person;
+import org.example.rh.demo.Factory.PersonFactory;
 import org.example.rh.demo.Model.Agence;
 import org.example.rh.demo.Model.Employe;
 import org.example.rh.demo.Model.Enfant;
@@ -65,6 +66,7 @@ public class HelloApplication extends Application {
         Button button2 = new Button("Modifier");
         Button button3 = new Button("Supprimer");
         Button button4 = new Button("Supprimer dernier");
+        Button button5 = new Button("Supprimer tout");
 
         //on declare les actions de nos button, ici lance une fonction créer en dessous
         button.setOnAction(e -> ajoutFonction());
@@ -72,6 +74,7 @@ public class HelloApplication extends Application {
         button2.setOnAction(e -> modifierFonction());
         button3.setOnAction(e -> suppressionFonction());
         button4.setOnAction(e -> suppressionDernierFonction());
+        button5.setOnAction(e -> suppressionToutFonction());
 
         /*
         ------------------- MENUTOP -------------------
@@ -82,7 +85,7 @@ public class HelloApplication extends Application {
         menuTop.setPadding(new Insets(10)); //padding entre les buttons
         menuTop.setAlignment(Pos.TOP_CENTER); // position center haut
         // on ajoute tous les button a notre "menu header"
-        menuTop.getChildren().addAll(button0, button, button2, button3, button4);
+        menuTop.getChildren().addAll(button0, button, button2, button3, button4, button5);
 
         /*
         ------------------- TABLEAU -------------------
@@ -222,10 +225,20 @@ public class HelloApplication extends Application {
         salaireField.setPromptText("Salaire");
         salaireField.getValueFactory().setValue(selectedPerson.getSalaire());
 
-
-
-
         Button modifButton = new Button("Valider");
+        modifButton.setOnAction(e -> {
+            if(selectedPerson != null){
+                Employe empSecur = new Employe(
+                        selectedPerson.getId(),
+                        nameField.getText(),
+                        prenameField.getText(),
+                        dateField.getValue(),
+                        posteField.getText(),
+                        salaireField.getValue(),
+                        serviceField.getValue());
+                agence1.modifEmploye(empSecur);
+            }
+        });
 
         //Mise en page des input type text dans un horizontal box
         HBox input = new HBox(10, nameField, prenameField, dateField, posteField, serviceField, salaireField, modifButton);
@@ -240,13 +253,13 @@ public class HelloApplication extends Application {
     private void suppressionDernierFonction(){
         agence1.supprEmploye();
     }
+    private void suppressionToutFonction(){
+        agence1.personnes.clear();
+    }
     private void ajoutAelaFonction(){
         agence1.GenereEmploye(1);
     }
     private void ajouterEmploye(String name1, String prename1, LocalDate date, String poste, String service, int salaire){
-        //ArrayList<Enfant> rien = new ArrayList<Enfant>();
-        System.out.println(name1);
-        System.out.println(prename1);
         Employe empSecure = new Employe(name1, prename1, date, poste, salaire, service);
 
         agence1.AjoutEmployee(empSecure);

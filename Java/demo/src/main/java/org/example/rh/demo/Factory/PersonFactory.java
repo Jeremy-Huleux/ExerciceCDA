@@ -10,6 +10,7 @@ public class PersonFactory {
 
     public static Person createPerson(Employe employe, String agence) {
         return  new Person(
+                            employe.getId(),
                             employe.getNom(),
                             employe.getPrenom(),
                             employe.getDateEmbauche(),
@@ -19,5 +20,17 @@ public class PersonFactory {
                             employe.getEnfants(),
                             agence
                     );
+    }
+    public static Person createPerson(Employe employe) {
+        return  new Person(
+                employe.getId(),
+                employe.getNom(),
+                employe.getPrenom(),
+                employe.getDateEmbauche(),
+                employe.getPoste(),
+                employe.getSalaire(),
+                employe.getService(),
+                employe.getEnfants()
+        );
     }
 }

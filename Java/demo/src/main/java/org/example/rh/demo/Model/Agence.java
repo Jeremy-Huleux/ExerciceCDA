@@ -10,6 +10,7 @@ import java.util.Collections;
 import java.util.List;
 
 import static org.example.rh.demo.Factory.PersonFactory.createPerson;
+import static org.example.rh.demo.Factory.PersonsFactory.createPersons;
 
 
 public class Agence {
@@ -19,6 +20,7 @@ public class Agence {
     private String ville;
     private ArrayList<Employe> listEmploye = new ArrayList<>();
     public ObservableList<Person> personnes = FXCollections.observableArrayList();
+    public ObservableList<Employe> employes = FXCollections.observableArrayList();
     private boolean restaurant;
     private List<String> services = Arrays.asList(
             "Informatique", "Ressources Humaines", "Marketing", "Ventes",
@@ -79,8 +81,14 @@ public class Agence {
         this.listEmploye.remove(listEmploye.size()-1);
         this.personnes.remove(personnes.size()-1);
     }
-    public void modifEmploye(){
-        //OULAOULAOULAOULAOULAOULAOULAOULA
+    public void modifEmploye(Employe emp){
+        personnes.clear();
+        this.listEmploye.forEach(employe -> {
+            if(employe.getId() == emp.getId()){
+                Employe saveEmp = employe.modifEmploye(emp);
+            }
+            this.personnes.add(createPerson(employe, this.nom));
+        });
     }
 
     public int nbEmployee(){
