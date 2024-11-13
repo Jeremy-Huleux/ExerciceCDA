@@ -2,12 +2,12 @@ package org.example.rh.demo.Model;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import org.example.rh.demo.DTO.Person;
-import org.example.rh.demo.Model.*;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import static org.example.rh.demo.Factory.PersonFactory.createPerson;
 import static org.example.rh.demo.Factory.PersonsFactory.createPersons;
@@ -22,6 +22,7 @@ public class Agence {
     public ObservableList<Person> personnes = FXCollections.observableArrayList();
     public ObservableList<Employe> employes = FXCollections.observableArrayList();
     private boolean restaurant;
+    private Employe employerASuppr;
     private List<String> services = Arrays.asList(
             "Informatique", "Ressources Humaines", "Marketing", "Ventes",
             "Finance", "Développement", "Design", "Production",
@@ -90,6 +91,18 @@ public class Agence {
             this.personnes.add(createPerson(employe, this.nom));
         });
     }
+    public void supprEmployeSelect(Employe emp){
+        AtomicInteger i = new AtomicInteger();
+        this.listEmploye.forEach(employe -> {
+            if(employe.getId() == emp.getId()){
+                employerASuppr = employe;
+                i.set(this.listEmploye.indexOf(employerASuppr));
+            }
+        });
+        this.personnes.remove(i.intValue());
+        this.listEmploye.remove(employerASuppr);
+    }
+
 
     public int nbEmployee(){
         return listEmploye.size();

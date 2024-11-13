@@ -9,6 +9,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
 
+
 public class Employe implements Comparable<Employe>{
     private long id;
     private String nom;
@@ -80,6 +81,20 @@ public class Employe implements Comparable<Employe>{
         this.poste = poste;
         this.salaire = salaire;
         this.service = service;
+        this.chequeOrNot();
+        this.enfants = enfants != null ? enfants : new ArrayList<Enfant>();
+    }
+    public Employe(long id, String name, String prename, LocalDate date, String poste, int salaire, Long service) {
+        this.id = id;
+        this.nom = name;
+        this.prenom = prename;
+        // Convertir LocalDate en Date
+        this.dateEmbauche = date;
+        this.localdateEmbauche = date;
+        this.anneeAncienneteAuPrime = Period.between(localdateEmbauche, jourDePrime).getYears();
+        this.poste = poste;
+        this.salaire = salaire;
+        this.service = "service"; //TODO : Récupérer le service dans la BDD
         this.chequeOrNot();
         this.enfants = enfants != null ? enfants : new ArrayList<Enfant>();
     }
@@ -315,19 +330,7 @@ public class Employe implements Comparable<Employe>{
                 " la somme de : " + salaire/12 + "€ de salaire mensuel\n" +
                 " pour un total de  : " + ((salaire/12)+primeAnciennete()+primeAnnuel()) + "€ de salaire\n";
     }
-//    @Override
-//    public boolean equals(Object obj){
-//        if(this == obj){
-//            return true;
-//        }
-//        if(obj == null || getClass() != obj.getClass()){
-//            return false;
-//        }
-//        //TODO : finir equals avec idEmp
-//        //convertit l'objet en Emp pour accéder a ses attributs
-//        Employe other = (Employe) obj;
-//
-//    }
+
 
     @Override
     public int compareTo(Employe emp){

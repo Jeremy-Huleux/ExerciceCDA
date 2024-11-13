@@ -77,7 +77,9 @@ public class HelloApplication extends Application {
         button5.setOnAction(e -> suppressionToutFonction());
 
         /*
+
         ------------------- MENUTOP -------------------
+
          */
 
         //on declare notre menu dans une HBox (Horizontal box)
@@ -99,12 +101,8 @@ public class HelloApplication extends Application {
         TableColumn<Person, String> serviceColonne = new TableColumn<>("Service");
         TableColumn<Person, String> salaireColonne = new TableColumn<>("Salaire");
 
-
         //génération des données
-        agence1.GenereEmploye(4);
-
-
-
+        agence1.GenereEmploye(10);
 
         //creation des lignes de données
         nomColonne.setCellValueFactory(new PropertyValueFactory<>("name"));
@@ -113,10 +111,6 @@ public class HelloApplication extends Application {
         posteColonne.setCellValueFactory(new PropertyValueFactory<>("poste"));
         serviceColonne.setCellValueFactory(new PropertyValueFactory<>("service"));
         salaireColonne.setCellValueFactory(new PropertyValueFactory<>("salaire"));
-
-
-
-
 
         //ajuste automatiquement les tailles des colonnes pour faire la taille de l'app
         tableauVue.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
@@ -179,9 +173,7 @@ public class HelloApplication extends Application {
             String service = serviceField.getValue();
             int salaire = salaireField.getValue();
 
-
             ajouterEmploye(name, prename, date, poste, service, salaire);
-            //clearFields();
         });
 
         //Mise en page des input type text dans un horizontal box
@@ -248,7 +240,9 @@ public class HelloApplication extends Application {
 
     }
     private void suppressionFonction(){
-
+        Employe selectedPerson = tableauVue.getSelectionModel().getSelectedItem();
+        agence1.supprEmployeSelect(selectedPerson);
+        //System.out.println("test");
     }
     private void suppressionDernierFonction(){
         agence1.supprEmploye();
@@ -261,18 +255,9 @@ public class HelloApplication extends Application {
     }
     private void ajouterEmploye(String name1, String prename1, LocalDate date, String poste, String service, int salaire){
         Employe empSecure = new Employe(name1, prename1, date, poste, salaire, service);
-
         agence1.AjoutEmployee(empSecure);
         root.getChildren().remove(2);
-        
-
     }
-
-
-    private void invokMenu(){
-
-    }
-
 
     public static void main(String[] args) {
         launch();
