@@ -1,5 +1,13 @@
 package org.example.rh.demo.Model;
 
+import org.example.rh.demo.DAO.EmployeDAO;
+import org.example.rh.demo.DAO.EmployeDAOImpl;
+import org.example.rh.demo.DAO.ServiceDAO;
+import org.example.rh.demo.DAO.ServiceDAOImpl;
+import org.example.rh.demo.DB.DatabaseConnector;
+
+import java.sql.Connection;
+import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
@@ -19,12 +27,14 @@ public class Employe implements Comparable<Employe>{
     private LocalDate dateEmbauche;
     private String poste;
     private int salaire; //(en k € brut annuel)
-    private String service;
+    private String serviceString;
     //public SimpleDateFormat formatDateFR = new SimpleDateFormat("dd/MM/yyyy");
     public Date aujourdhui = new Date();
     public LocalDate jourDePrime = LocalDate.of(recupAnnee(aujourdhui), 11, 30);
     public LocalDate localdateEmbauche;
     public int anneeAncienneteAuPrime;
+    public long serviceId;
+    private Service service;
 
     public Employe(String name, String prename, LocalDate date, String poste, int salaire, String service, ArrayList<Enfant> enfants) {
         this.id = genereId();
@@ -36,7 +46,8 @@ public class Employe implements Comparable<Employe>{
         this.anneeAncienneteAuPrime = Period.between(localdateEmbauche, jourDePrime).getYears();
         this.poste = poste;
         this.salaire = salaire;
-        this.service = service;
+        this.serviceString = service;
+
         this.chequeOrNot();
         this.enfants = enfants != null ? enfants : new ArrayList<Enfant>();
     }
@@ -51,7 +62,8 @@ public class Employe implements Comparable<Employe>{
         this.anneeAncienneteAuPrime = Period.between(localdateEmbauche, jourDePrime).getYears();
         this.poste = poste;
         this.salaire = salaire;
-        this.service = service;
+        this.serviceString = service;
+
         this.chequeOrNot();
         this.enfants = enfants != null ? enfants : new ArrayList<Enfant>();
     }
@@ -66,7 +78,8 @@ public class Employe implements Comparable<Employe>{
         this.anneeAncienneteAuPrime = Period.between(localdateEmbauche, jourDePrime).getYears();
         this.poste = poste;
         this.salaire = salaire;
-        this.service = service;
+        this.serviceString = service;
+
         this.chequeOrNot();
         this.enfants = enfants != null ? enfants : new ArrayList<Enfant>();
     }
@@ -80,7 +93,8 @@ public class Employe implements Comparable<Employe>{
         this.anneeAncienneteAuPrime = Period.between(localdateEmbauche, jourDePrime).getYears();
         this.poste = poste;
         this.salaire = salaire;
-        this.service = service;
+        this.serviceString = service;
+
         this.chequeOrNot();
         this.enfants = enfants != null ? enfants : new ArrayList<Enfant>();
     }
@@ -94,7 +108,22 @@ public class Employe implements Comparable<Employe>{
         this.anneeAncienneteAuPrime = Period.between(localdateEmbauche, jourDePrime).getYears();
         this.poste = poste;
         this.salaire = salaire;
-        this.service = "service"; //TODO : Récupérer le service dans la BDD
+        this.serviceId = service; //TODO : Récupérer le service dans la BDD
+        this.serviceString = getServiceStringBdd();
+        this.chequeOrNot();
+        this.enfants = enfants != null ? enfants : new ArrayList<Enfant>();
+    }
+    public Employe(String name, String prename, LocalDate date, String poste, int salaire, Long service) {
+        this.nom = name;
+        this.prenom = prename;
+        // Convertir LocalDate en Date
+        this.dateEmbauche = date;
+        this.localdateEmbauche = date;
+        this.anneeAncienneteAuPrime = Period.between(localdateEmbauche, jourDePrime).getYears();
+        this.poste = poste;
+        this.salaire = salaire;
+        this.serviceId = service;
+        this.serviceString = getServiceStringBdd();
         this.chequeOrNot();
         this.enfants = enfants != null ? enfants : new ArrayList<Enfant>();
     }
@@ -140,42 +169,23 @@ public class Employe implements Comparable<Employe>{
         this.salaire = salaire;
     }
 
-    public String getService() {
-        return service;
+    public String getServiceStringBdd() {
+        try(Connection connection = DatabaseConnector.getConnection()){
+            ServiceDAO serviceDAO = new ServiceDAOImpl(connection);
+            return serviceDAO.trouverServiceParId(this.serviceId);
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
+        return null;
     }
-
-    public void setService(String service) {
+    public String getServiceString(){
+        return serviceString;
+    }
+    public void setService(Service service) {
         this.service = service;
     }
 
-//
-//
-//    public Employe(String nom,
-//                   String prenom,
-//                   String date,
-//                   String poste,
-//                   int salaire,
-//                   String service,
-//                   ArrayList<Enfant> enfants) {//arraylist enfant nullable
-//        this.nom = nom;
-//        this.prenom = prenom;
-//        try{
-//            this.dateEmbauche = formatDateFR.parse(date);
-//            this.localdateEmbauche = dateEmbauche
-//                    .toInstant() // Convertit Date en Instant
-//                    .atZone(ZoneId.systemDefault()) // Obtient le fuseau horaire par défaut
-//                    .toLocalDate(); // Convertit en LocalDate
-//            this.anneeAncienneteAuPrime = Period.between(localdateEmbauche, jourDePrime).getYears();
-//        } catch (ParseException e) {
-//            this.dateEmbauche = new Date();
-//        }
-//        this.poste = poste;
-//        this.salaire = salaire;
-//        this.service = service;
-//        this.chequeOrNot();
-//        this.enfants = enfants != null ? enfants : new ArrayList<Enfant>();
-//    }
-//
+
     public Employe(ArrayList<Enfant> enfants) {
         this.id = genereId();
         this.nom = generationNom();
@@ -186,7 +196,7 @@ public class Employe implements Comparable<Employe>{
         this.anneeAncienneteAuPrime = Period.between(localdateEmbauche, jourDePrime).getYears();
         this.poste = generationPoste();
         this.salaire = generationSalaire();
-        this.service = generationService();
+        this.serviceString = generationService();
         this.chequeOrNot();
         //this.nbEnfant = generationNbEnfants();
     }
@@ -334,9 +344,9 @@ public class Employe implements Comparable<Employe>{
 
     @Override
     public int compareTo(Employe emp){
-        int r = this.service.compareTo(emp.service);
+        int r = this.serviceString.compareTo(emp.serviceString);
 
-        if(r==0) return this.service.compareTo(emp.service);
+        if(r==0) return this.serviceString.compareTo(emp.serviceString);
 
         return r;
 
@@ -381,9 +391,11 @@ public class Employe implements Comparable<Employe>{
         this.anneeAncienneteAuPrime = Period.between(localdateEmbauche, jourDePrime).getYears();
         this.poste = emp.getPoste();
         this.salaire = emp.getSalaire();
-        this.service = emp.getService();
+        this.service = emp.getServiceObj();
+        this.serviceString = emp.getServiceString();
         this.chequeOrNot();
         this.enfants = enfants != null ? enfants : new ArrayList<Enfant>();
+
         return emp;
     }
 
@@ -404,6 +416,19 @@ public class Employe implements Comparable<Employe>{
 
     public long getId() {
         return id;
+    }
+
+
+    public Service getServiceObj() {
+        return this.service = service;
+    }
+
+    public long getServiceId() {
+        return serviceId;
+    }
+
+    public void setServiceId(long serviceId) {
+        this.serviceId = serviceId;
     }
 }
        /*

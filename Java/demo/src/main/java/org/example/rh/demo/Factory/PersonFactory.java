@@ -16,7 +16,7 @@ public class PersonFactory {
                             employe.getDateEmbauche(),
                             employe.getPoste(),
                             employe.getSalaire(),
-                            employe.getService(),
+                            employe.getServiceString(),
                             employe.getEnfants(),
                             agence
                     );
@@ -29,7 +29,7 @@ public class PersonFactory {
                 employe.getDateEmbauche(),
                 employe.getPoste(),
                 employe.getSalaire(),
-                employe.getService(),
+                employe.getServiceString(),
                 employe.getEnfants()
         );
     }

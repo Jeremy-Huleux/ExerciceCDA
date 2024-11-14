@@ -1,9 +1,9 @@
 package org.example.rh.demo.DAO;
 
-import java.sql.Connection;
-import java.sql.Date;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
+import org.example.rh.demo.Model.Service;
+
+import java.sql.*;
+import java.util.ArrayList;
 import java.util.List;
 
 public class ServiceDAOImpl implements ServiceDAO{
@@ -41,11 +41,40 @@ public class ServiceDAOImpl implements ServiceDAO{
 
     @Override
     public String trouverServiceParId(long id) {
-        return "";
+        String sql = "SELECT nomService, idService FROM service WHERE idService = ?";
+        try(PreparedStatement statement = connection.prepareStatement(sql)){
+            statement.setLong(1, id);
+            ResultSet result = statement.executeQuery();
+            if(result.next()){
+                new Service(
+                        result.getString("nomService"),
+                        result.getLong("idService")
+                );
+                return  result.getString("nomService");//TODO : Attention ici !
+            }
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
+        return null;
     }
 
     @Override
-    public List<String> trouverTousLesServices() {
-        return List.of();
+    public ArrayList<Service> trouverTousLesServices() {
+        ArrayList<Service> listServices = new ArrayList<Service>();
+        String sql = "SELECT nomService, idService FROM service";
+        try(PreparedStatement statement = connection.prepareStatement(sql)){
+            ResultSet result = statement.executeQuery();
+            while(result.next()){
+                listServices.add(
+                    new Service(
+                        result.getString("nomService"),
+                        result.getLong("idService")
+                    )
+                );
+            }
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
+        return listServices;
     }
 }

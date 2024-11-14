@@ -16,7 +16,7 @@ public class EmployeDAOImpl implements EmployeDAO{
 
     @Override
     public void ajouterEmploye(Employe employe) {
-        String sql = "INSERT INTO Employe (nomEmploye, prenomEmploye, posteEmploye, dateEmbauche, salaire) WHERE (?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO employe (nomEmploye, prenomEmploye, posteEmploye, dateEmbauche, salaire) VALUES (?, ?, ?, ?, ?)";
         try(PreparedStatement statement = connection.prepareStatement(sql)){
             statement.setString(1, employe.getNom());
             statement.setString(2, employe.getPrenom());
@@ -31,9 +31,10 @@ public class EmployeDAOImpl implements EmployeDAO{
 
     @Override
     public void supprimerEmploye(long id) {
-        String sql = "DELETE FROM employe WHERE employeId = ?";
+        String sql = "DELETE FROM employe WHERE idEmploye = ?";
         try(PreparedStatement statement = connection.prepareStatement(sql)){
             statement.setLong(1, id);
+
             statement.executeUpdate();
         }catch (SQLException e){
             e.printStackTrace();
@@ -42,19 +43,23 @@ public class EmployeDAOImpl implements EmployeDAO{
 
     @Override
     public void modifierEmploye(Employe employe) {
-        String sql = "UPDATE employee SET" +
+        String sql = "UPDATE employe SET" +
                 " nomEmploye = ? ," +
                 " prenomEmploye = ?," +
                 " posteEmploye = ?," +
                 " dateEmbauche = ?," +
-                " salaire = ?" +
+                " salaire = ?, " +
+                "idService = ? " +
                 "WHERE idEmploye = ?";
         try(PreparedStatement statement = connection.prepareStatement(sql)){
             statement.setString(1, employe.getNom());
             statement.setString(2, employe.getPrenom());
             statement.setString(3, employe.getPoste());
             statement.setDate(4, Date.valueOf(employe.getDateEmbauche()));
-            statement.setInt(4, employe.getSalaire());
+            statement.setInt(5, employe.getSalaire());
+            statement.setLong(6, employe.getServiceId());
+            statement.setLong(7, employe.getId());
+            System.out.println(statement);
             statement.executeUpdate();
         }catch (SQLException e){
             e.printStackTrace();
@@ -70,9 +75,8 @@ public class EmployeDAOImpl implements EmployeDAO{
                 "e.dateEmbauche, " +
                 "e.posteEmploye, " +
                 "e.salaire, " +
-                "s.nomService " +
+                "e.idService" +
                 "FROM employe e " +
-                "JOIN service s ON e.idService = s.idService " +
                 "WHERE e.idEmploye = ?";
         try(PreparedStatement statement = connection.prepareStatement(sql)){
             statement.setLong(1, id);
@@ -85,7 +89,7 @@ public class EmployeDAOImpl implements EmployeDAO{
                         result.getDate("dateEmbauche").toLocalDate(),
                         result.getString("posteEmploye"),
                         result.getInt("salaire"),
-                        result.getString("nomService")
+                        result.getLong("idService")
                 );
             }
             statement.executeUpdate();
@@ -96,18 +100,18 @@ public class EmployeDAOImpl implements EmployeDAO{
     }
 
     @Override
-    public List<Employe> trouverTousLesEmployes() {
+    public ArrayList<Employe> trouverTousLesEmployes() {
         String sql = "SELECT " +
-                "e.idEmploye, " +
-                "e.nomEmploye, " +
-                "e.prenomEmploye, " +
-                "e.dateEmbauche, " +
-                "e.posteEmploye, " +
-                "e.salaire, " +
-                "s.nomService " +
-                "FROM employe e " +
-                "JOIN service s ON e.idService = s.idService";
-        List<Employe> emps = new ArrayList<>();
+                "idEmploye, " +
+                "nomEmploye, " +
+                "prenomEmploye, " +
+                "dateEmbauche, " +
+                "posteEmploye, " +
+                "salaire, " +
+                "idService " +
+                "FROM employe ";
+        System.out.println(sql);
+        ArrayList<Employe> emps = new ArrayList<>();
         try(PreparedStatement pstmt = connection.prepareStatement(sql)){
             try(ResultSet result = pstmt.executeQuery()){
                 while(result.next()){
@@ -118,7 +122,7 @@ public class EmployeDAOImpl implements EmployeDAO{
                             result.getDate("dateEmbauche").toLocalDate(),
                             result.getString("posteEmploye"),
                             result.getInt("salaire"),
-                            result.getString("nomService")
+                            result.getLong("idService")
                     );
                     emps.add(emp);
                 }

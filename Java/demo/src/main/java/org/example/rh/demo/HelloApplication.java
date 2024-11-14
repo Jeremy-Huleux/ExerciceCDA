@@ -2,6 +2,7 @@ package org.example.rh.demo;
 
 import javafx.application.Application;
 import javafx.collections.FXCollections;
+import javafx.collections.ObservableArray;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
@@ -18,6 +19,7 @@ import org.example.rh.demo.Factory.PersonFactory;
 import org.example.rh.demo.Model.Agence;
 import org.example.rh.demo.Model.Employe;
 import org.example.rh.demo.Model.Enfant;
+import org.example.rh.demo.Model.Service;
 
 
 import java.io.IOException;
@@ -65,16 +67,16 @@ public class HelloApplication extends Application {
         Button button0 = new Button("Ajouter un employee aleatoire");
         Button button2 = new Button("Modifier");
         Button button3 = new Button("Supprimer");
-        Button button4 = new Button("Supprimer dernier");
-        Button button5 = new Button("Supprimer tout");
+        //Button button4 = new Button("Supprimer dernier");
+        //Button button5 = new Button("Supprimer tout");
 
         //on declare les actions de nos button, ici lance une fonction créer en dessous
         button.setOnAction(e -> ajoutFonction());
         button0.setOnAction(e -> ajoutAelaFonction());
         button2.setOnAction(e -> modifierFonction());
         button3.setOnAction(e -> suppressionFonction());
-        button4.setOnAction(e -> suppressionDernierFonction());
-        button5.setOnAction(e -> suppressionToutFonction());
+        //button4.setOnAction(e -> suppressionDernierFonction());
+        //button5.setOnAction(e -> suppressionToutFonction());
 
         /*
 
@@ -87,7 +89,7 @@ public class HelloApplication extends Application {
         menuTop.setPadding(new Insets(10)); //padding entre les buttons
         menuTop.setAlignment(Pos.TOP_CENTER); // position center haut
         // on ajoute tous les button a notre "menu header"
-        menuTop.getChildren().addAll(button0, button, button2, button3, button4, button5);
+        menuTop.getChildren().addAll(button0, button, button2, button3);
 
         /*
         ------------------- TABLEAU -------------------
@@ -102,7 +104,7 @@ public class HelloApplication extends Application {
         TableColumn<Person, String> salaireColonne = new TableColumn<>("Salaire");
 
         //génération des données
-        agence1.GenereEmploye(10);
+        //agence1.GenereEmployes(2);
 
         //creation des lignes de données
         nomColonne.setCellValueFactory(new PropertyValueFactory<>("name"));
@@ -156,9 +158,12 @@ public class HelloApplication extends Application {
         TextField posteField = new TextField();
         posteField.setPromptText("Poste");
 
-        ComboBox<String> serviceField = new ComboBox<>();
+        ComboBox<Service> serviceField = new ComboBox<Service>();
         serviceField.setPromptText("Service");
         serviceField.getItems().addAll(agence1.getServices());
+
+
+
         //0 à 250k max
         Spinner<Integer> salaireField = new Spinner<>(0, 250000, 0);
         salaireField.setEditable(true);//permets la saisie direct
@@ -170,10 +175,10 @@ public class HelloApplication extends Application {
             String prename = prenameField.getText();
             LocalDate date = dateField.getValue();
             String poste = posteField.getText();
-            String service = serviceField.getValue();
+            long service = serviceField.getValue().getIdService();
             int salaire = salaireField.getValue();
 
-            ajouterEmploye(name, prename, date, poste, service, salaire);
+            ajouterEmploye(name, prename, date, poste,  salaire, service);
         });
 
         //Mise en page des input type text dans un horizontal box
@@ -204,11 +209,8 @@ public class HelloApplication extends Application {
         posteField.setPromptText("Poste");
         posteField.setText(selectedPerson.getPoste());
 
-        ComboBox<String> serviceField = new ComboBox<>();
+        ComboBox<Service> serviceField = new ComboBox<Service>();
         serviceField.setPromptText("Service");
-        serviceField.setValue(selectedPerson.getService());
-
-
         serviceField.getItems().addAll(agence1.getServices());
 
         //0 à 250k max
@@ -227,8 +229,9 @@ public class HelloApplication extends Application {
                         dateField.getValue(),
                         posteField.getText(),
                         salaireField.getValue(),
-                        serviceField.getValue());
+                        serviceField.getValue().getIdService());
                 agence1.modifEmploye(empSecur);
+                root.getChildren().remove(2);
             }
         });
 
@@ -244,16 +247,17 @@ public class HelloApplication extends Application {
         agence1.supprEmployeSelect(selectedPerson);
         //System.out.println("test");
     }
-    private void suppressionDernierFonction(){
-        agence1.supprEmploye();
-    }
+    //private void suppressionDernierFonction(){
+        //agence1.supprEmploye();
+    //}
     private void suppressionToutFonction(){
         agence1.personnes.clear();
     }
     private void ajoutAelaFonction(){
-        agence1.GenereEmploye(1);
+        agence1.GenereEmploye();
+
     }
-    private void ajouterEmploye(String name1, String prename1, LocalDate date, String poste, String service, int salaire){
+    private void ajouterEmploye(String name1, String prename1, LocalDate date, String poste, int salaire, long service){
         Employe empSecure = new Employe(name1, prename1, date, poste, salaire, service);
         agence1.AjoutEmployee(empSecure);
         root.getChildren().remove(2);
