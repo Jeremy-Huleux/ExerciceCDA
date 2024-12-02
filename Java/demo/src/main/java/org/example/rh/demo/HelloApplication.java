@@ -15,6 +15,8 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import org.controlsfx.control.Notifications;
 import org.example.rh.demo.DTO.Person;
+import org.example.rh.demo.Erreurs.ErreurSythaxiqueException;
+import org.example.rh.demo.Erreurs.GestionnaireErreur;
 import org.example.rh.demo.Factory.PersonFactory;
 import org.example.rh.demo.Model.Agence;
 import org.example.rh.demo.Model.Employe;
@@ -67,16 +69,14 @@ public class HelloApplication extends Application {
         Button button0 = new Button("Ajouter un employee aleatoire");
         Button button2 = new Button("Modifier");
         Button button3 = new Button("Supprimer");
-        //Button button4 = new Button("Supprimer dernier");
-        //Button button5 = new Button("Supprimer tout");
+
 
         //on declare les actions de nos button, ici lance une fonction créer en dessous
         button.setOnAction(e -> ajoutFonction());
         button0.setOnAction(e -> ajoutAelaFonction());
         button2.setOnAction(e -> modifierFonction());
         button3.setOnAction(e -> suppressionFonction());
-        //button4.setOnAction(e -> suppressionDernierFonction());
-        //button5.setOnAction(e -> suppressionToutFonction());
+
 
         /*
 
@@ -140,11 +140,7 @@ public class HelloApplication extends Application {
 
     private void ajoutFonction(){
         // Creation des champs textes (input type text)
-        /*
 
-         public Employe(String nom, String prenom, String date, String poste, int salaire, String service, ArrayList<Enfant> enfants) {//arraylist enfant nullable
-
-         */
 
         TextField nameField = new TextField();
         nameField.setPromptText("Nom");
@@ -222,16 +218,20 @@ public class HelloApplication extends Application {
         Button modifButton = new Button("Valider");
         modifButton.setOnAction(e -> {
             if(selectedPerson != null){
-                Employe empSecur = new Employe(
-                        selectedPerson.getId(),
-                        nameField.getText(),
-                        prenameField.getText(),
-                        dateField.getValue(),
-                        posteField.getText(),
-                        salaireField.getValue(),
-                        serviceField.getValue().getIdService());
-                agence1.modifEmploye(empSecur);
-                root.getChildren().remove(2);
+                //try{
+                    Employe empSecur = new Employe(
+                            selectedPerson.getId(),
+                            nameField.getText(),
+                            prenameField.getText(),
+                            dateField.getValue(),
+                            posteField.getText(),
+                            salaireField.getValue(),
+                            serviceField.getValue().getIdService());
+                    agence1.modifEmploye(empSecur);
+                    root.getChildren().remove(2);
+                //}catch (ErreurSythaxiqueException n){
+                    //GestionnaireErreur.afficherErreurSynthaxique("Test", n);
+                //}
             }
         });
 
@@ -266,4 +266,6 @@ public class HelloApplication extends Application {
     public static void main(String[] args) {
         launch();
     }
+
+
 }

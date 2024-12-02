@@ -1,19 +1,17 @@
 package org.example.rh.demo.Model;
 
-import org.example.rh.demo.DAO.EmployeDAO;
-import org.example.rh.demo.DAO.EmployeDAOImpl;
+
 import org.example.rh.demo.DAO.ServiceDAO;
 import org.example.rh.demo.DAO.ServiceDAOImpl;
 import org.example.rh.demo.DB.DatabaseConnector;
 
 import java.sql.Connection;
 import java.sql.SQLException;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
+
 import java.time.LocalDate;
 import java.time.Period;
 import java.time.ZoneId;
-import java.time.format.DateTimeFormatter;
+
 import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -28,7 +26,6 @@ public class Employe implements Comparable<Employe>{
     private String poste;
     private int salaire; //(en k € brut annuel)
     private String serviceString;
-    //public SimpleDateFormat formatDateFR = new SimpleDateFormat("dd/MM/yyyy");
     public Date aujourdhui = new Date();
     public LocalDate jourDePrime = LocalDate.of(recupAnnee(aujourdhui), 11, 30);
     public LocalDate localdateEmbauche;
@@ -53,37 +50,6 @@ public class Employe implements Comparable<Employe>{
     }
 
     public Employe(long id, String name, String prename, LocalDate date, String poste, int salaire, String service, ArrayList<Enfant> enfants) {
-        this.id = id;
-        this.nom = name;
-        this.prenom = prename;
-        // Convertir LocalDate en Date
-        this.dateEmbauche = date;
-        this.localdateEmbauche = date;
-        this.anneeAncienneteAuPrime = Period.between(localdateEmbauche, jourDePrime).getYears();
-        this.poste = poste;
-        this.salaire = salaire;
-        this.serviceString = service;
-
-        this.chequeOrNot();
-        this.enfants = enfants != null ? enfants : new ArrayList<Enfant>();
-    }
-
-    public Employe(String name, String prename, LocalDate date, String poste, int salaire, String service) {
-        this.id = genereId();
-        this.nom = name;
-        this.prenom = prename;
-        // Convertir LocalDate en Date
-        this.dateEmbauche = date;
-        this.localdateEmbauche = date;
-        this.anneeAncienneteAuPrime = Period.between(localdateEmbauche, jourDePrime).getYears();
-        this.poste = poste;
-        this.salaire = salaire;
-        this.serviceString = service;
-
-        this.chequeOrNot();
-        this.enfants = enfants != null ? enfants : new ArrayList<Enfant>();
-    }
-    public Employe(long id, String name, String prename, LocalDate date, String poste, int salaire, String service) {
         this.id = id;
         this.nom = name;
         this.prenom = prename;
@@ -148,10 +114,6 @@ public class Employe implements Comparable<Employe>{
     public LocalDate getDateEmbauche() {
         return dateEmbauche;
     }
-
-//    public void setDateEmbauche(Date dateEmbauche) {
-//        this.dateEmbauche = dateEmbauche;
-//    }
 
     public String getPoste() {
         return poste;
@@ -431,15 +393,3 @@ public class Employe implements Comparable<Employe>{
         this.serviceId = serviceId;
     }
 }
-       /*
-Chaque année, des chèques Noël sont distribués aux enfants des employés. Le montant du chèque
-Noël dépend de l’âge des enfants :
- 20 euros pour les enfants de 0 à 10 ans
- 30 euros pour les enfants de 11 à 15 ans.
- 50 euros pour les enfants de 16 à 18 ans.
-Modifier le programme afin de gérer l’attribution des chèques Noël aux enfants des salariés. Afficher
-dans la console si l’employé a le droit d’avoir des chèques Noël (Oui/Non). Pour ce faire, établir les
-conditions nécessaires dans le programme. Et si la réponse est Oui, afficher dans la console combien
-de chèques de chaque montant sera distribué à l’employé. Si aucun chèque n’est distribué pour une
-tranche d’âge, ne pas afficher dans la console.
-*/

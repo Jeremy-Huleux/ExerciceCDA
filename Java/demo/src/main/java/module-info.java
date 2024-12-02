@@ -13,4 +13,6 @@ module org.example.rh.demo {
     opens org.example.rh.demo.Model to javafx.fxml;
     exports org.example.rh.demo.DTO;
     opens org.example.rh.demo.DTO to javafx.fxml;
+    exports org.example.rh.demo.Erreurs;
+    opens org.example.rh.demo.Erreurs to javafx.fxml;
 }
