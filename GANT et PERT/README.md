@@ -46,7 +46,7 @@ Les tâches d’un projet sont définies dans le tableau ci-dessous :
   - Le **chemin critique**, identifié et représenté clairement.
 
 Vous pouvez consulter le diagramme PERT dans le fichier :  
-`diagramme_pert.png`
+`perttp.drawio(1).png`
 
 ---
 
@@ -55,7 +55,7 @@ Vous pouvez consulter le diagramme PERT dans le fichier :
 - Ce diagramme permet de visualiser facilement la répartition des tâches dans le temps.
 
 Le diagramme GANTT est disponible dans le fichier :  
-`diagramme_gantt.png`
+`GANT.xlsx`
 
 ---
 
