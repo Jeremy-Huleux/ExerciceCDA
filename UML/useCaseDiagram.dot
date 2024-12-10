@@ -1,0 +1,42 @@
+digraph UseCaseDiagram {
+    rankdir=LR;
+    size="12";
+
+    // Acteurs
+    Agent [label="Agent Commercial", shape=ellipse];
+    Chef [label="Chef Service Commercial", shape=ellipse];
+    Directeur [label="Directeur", shape=ellipse];
+    Production [label="Logiciel de Suivi de Production", shape=ellipse];
+    Comptabilite [label="Comptabilité", shape=ellipse];
+
+    // Cas d'utilisation
+    Authentification [label="Authentification", shape=ellipse];
+    EnregistrerClient [label="Enregistrement du Client", shape=ellipse];
+    EnregistrerCommande [label="Enregistrement de la Commande", shape=ellipse];
+    EtablirContrat [label="Établissement de Contrat", shape=ellipse];
+    OrdreFabrication [label="Émission d'Ordre de Fabrication", shape=ellipse];
+    SuiviProduction [label="Suivi de Production", shape=ellipse];
+    OrdrePaiement [label="Émission d'Ordre de Paiement", shape=ellipse];
+    EtatsStatistiques [label="Édition d'États Statistiques", shape=ellipse];
+
+    // Relations entre les acteurs et les cas d'utilisation
+    Agent -> Authentification;
+    Agent -> EnregistrerClient;
+    Agent -> EnregistrerCommande;
+    Agent -> EtatsStatistiques;
+
+    Chef -> Authentification;
+    Chef -> EnregistrerCommande;
+    Chef -> EtablirContrat;
+    Chef -> OrdreFabrication;
+    Chef -> SuiviProduction;
+    Chef -> OrdrePaiement;
+    Chef -> EtatsStatistiques;
+
+    Directeur -> EtatsStatistiques;
+
+    Production -> OrdreFabrication;
+    Production -> SuiviProduction;
+
+    Comptabilite -> OrdrePaiement;
+}
