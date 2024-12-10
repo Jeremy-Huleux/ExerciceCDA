@@ -4,12 +4,12 @@ digraph UseCaseDiagram {
 
     // Acteurs
 
-    Chef [label="Chef d'atelier", shape=underline];
-    LogicielCommercial [label="Logiciel commercial", shape=underline];
-    LogicielStock [label="Logiciel de gestion du stock", shape=underline];
-    AtelierExternes [label="Ateliers Externes", shape=underline];
-    Agent [label="Agent", shape=underline];
-    Employe [label="Employés", shape=underline];
+    Chef [label="Chef d'atelier", shape=signature];
+    LogicielCommercial [label="Logiciel commercial", shape=signature];
+    LogicielStock [label="Logiciel de gestion du stock", shape=signature];
+    AtelierExternes [label="Ateliers Externes", shape=signature];
+    Agent [label="Agent", shape=signature];
+    Employe [label="Employés", shape=signature];
   
 
 
