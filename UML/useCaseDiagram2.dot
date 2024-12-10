@@ -1,0 +1,61 @@
+digraph UseCaseDiagram {
+    rankdir=LR;
+    size="20";
+
+    // Acteurs
+
+    Chef [label="Chef d'atelier", shape=underline];
+    LogicielCommercial [label="Logiciel commercial", shape=underline];
+    LogicielStock [label="Logiciel de gestion du stock", shape=underline];
+    AtelierExternes [label="Ateliers Externes", shape=underline];
+    Agent [label="Agent", shape=underline];
+    Employe [label="Employés", shape=underline];
+  
+
+
+    // Cas d'utilisation
+
+    Importer [label="Importer l'ordre de fabrication", shape=ellipse];
+    Suivis [label="Etudie et realise", shape=ellipse];
+    PgmSimple [label="PGM simple", shape=ellipse];
+    PgmComplexe [label="PGM complexe", shape=ellipse];
+    Listing [label="Listing des matières premières", shape=ellipse];
+    Soustraitance [label="Demande de sous-traitance", shape=ellipse];
+    Saisie [label="Saisit au fur et a mesure du travail accomplis", shape=ellipse];
+    Enregistre [label="Enregistre le travail accomplis", shape=ellipse];
+    EtatdeProd [label="Edition d'etat de production", shape=ellipse];
+    EtatStatic [label="Edition d'etat Static", shape=ellipse];
+    Authentification [label="Authentification", shape=ellipse];
+    MotdePasse [label="Verification du mot de passe", shape=ellipse];
+
+    // Relations entre les acteurs et les cas d'utilisation
+    LogicielCommercial -> Importer;
+    Chef -> Importer;
+    Chef -> Suivis;
+    Suivis -> PgmSimple [label="<<Exclude>>" decorate=true style=dashed];
+    Suivis -> PgmComplexe [label="<<Exclude>>" decorate=true style=dashed];
+    PgmComplexe -> Soustraitance [label="<<Include>>" decorate=true style=dashed];
+    Soustraitance -> AtelierExternes;
+    PgmComplexe -> Listing;
+    PgmSimple -> Listing;
+    Chef -> Listing;
+    Agent -> Soustraitance;
+    Agent -> Saisie;
+    Chef -> Saisie;
+    Listing -> LogicielStock [label="<<Include>>" decorate=false style=dashed];
+    Employe -> Agent;
+    Chef -> EtatdeProd;
+    Enregistre -> Soustraitance;
+    Agent -> Enregistre;
+    Chef -> Enregistre;
+    Chef -> Soustraitance;
+    Agent -> EtatStatic;
+    Chef -> EtatStatic;
+    Agent -> Authentification;
+    Chef -> Authentification;
+    Authentification -> MotdePasse [label="<<Include>>" decorate=true style=dashed];
+    EtatStatic -> Chef;
+    EtatdeProd -> LogicielCommercial;
+
+    //[label="TEST" decorate=true style=dashed] pointiller type trait avec un texte sur la fleche
+}
