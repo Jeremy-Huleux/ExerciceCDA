@@ -63,9 +63,3 @@ Le diagramme GANTT est disponible dans le fichier :
 - Outils de dessin et de planification : **Draw.io**, **Excel**, ou autre outil graphique.
 - Gestion des versions : **Git** et **GitHub**.
 
----
-
-## 🚀 Comment utiliser ce dépôt ?
-1. Clonez le dépôt :
-   ```bash
-   git clone https://github.com/[VotrePseudo]/exercices_CDA.git
