@@ -1,18 +1,22 @@
 package classDiagram.Class;
 
+import java.util.ArrayList;
+
 public class Proprietaire {
     private long id;
     private String nom;
     private String prenom;
     private String adresse;
     private int tel;
+    private ArrayList<Animal> animauxPossede; //nullable
 
-    public Proprietaire(long id, String nom, String prenom, String adresse, int tel) {
+    public Proprietaire(long id, String nom, String prenom, String adresse, int tel, ArrayList<Animal> animauxPossede) {
         this.id = id;
         this.nom = nom;
         this.prenom = prenom;
         this.adresse = adresse;
         this.tel = tel;
+        this.animauxPossede = animauxPossede;
     }
 
     public long getId() {
