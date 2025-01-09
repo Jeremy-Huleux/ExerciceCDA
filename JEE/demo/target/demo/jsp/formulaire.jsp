@@ -71,11 +71,6 @@
         <a href="formulaire">Formulaire</a>
     </nav>
     <div class="container">
-        <h2>Manage Items</h2>
-        <form id="addItemForm">
-            <input type="text" name="itemName" placeholder="Item Name" required>
-            <button type="submit">Add Item</button>
-        </form>
         <table>
             <thead>
                 <tr>
@@ -95,7 +90,6 @@
                 </tr>
             </thead>
             <tbody id="itemList">
-                <!-- Items will be dynamically added here -->
                   <c:if test="${not empty utilisateurs}">
                     <c:forEach items="${utilisateurs}" var="utilisateur">
                         <tr>
@@ -113,8 +107,8 @@
                             <td>${utilisateur.idRole}</td>
                             <td>${utilisateur.email}</td>
                             <td>
-                                <button onclick="editItem(this)">Edit</button>
-                                <button onclick="deleteItem(this)">Delete</button>
+                                <button onclick="editItem(${utilisateur.idUtilisateur})">Edit</button>
+                                <button onclick="deleteItem(${utilisateur.idUtilisateur})">Delete</button>
                             </td>
                         </tr>
                     </c:forEach>
@@ -122,38 +116,5 @@
             </tbody>
         </table>
     </div>
-    <script>
-        document.getElementById('addItemForm').addEventListener('submit', function(event) {
-            event.preventDefault();
-            const itemName = event.target.itemName.value;
-            const itemList = document.getElementById('itemList');
-            const newRow = document.createElement('tr');
-            newRow.innerHTML = `
-                <td>1</td>
-                <td>${itemName}</td>
-                <td>
-                    <button onclick="editItem(this)">Edit</button>
-                    <button onclick="deleteItem(this)">Delete</button>
-                </td>
-            `;
-            itemList.appendChild(newRow);
-            event.target.reset();
-        });
-
-        function editItem(button) {
-            const row = button.parentElement.parentElement;
-            const itemName = prompt('Edit item name:', row.cells[1].innerText);
-            if (itemName) {
-                row.cells[1].innerText = itemName;
-            }
-        }
-
-        function deleteItem(button) {
-            if (confirm('Are you sure you want to delete this item?')) {
-                const row = button.parentElement.parentElement;
-                row.remove();
-            }
-        }
-    </script>
 </body>
 </html>
