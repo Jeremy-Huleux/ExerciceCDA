@@ -5,7 +5,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Page</title>
+    <title>Formulaire Page</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -71,6 +71,7 @@
         <a href="formulaire">Formulaire</a>
     </nav>
     <div class="container">
+
         <table>
             <thead>
                 <tr>
@@ -92,29 +93,31 @@
             <tbody id="itemList">
                   <c:if test="${not empty utilisateurs}">
                     <c:forEach items="${utilisateurs}" var="utilisateur">
-                        <tr>
-                            <td>${utilisateur.idUtilisateur}</td>
-                            <td>${utilisateur.nom}</td>
-                            <td>${utilisateur.prenom}</td>
-                            <td>${utilisateur.pseudo}</td>
-                            <td>${utilisateur.mdp}</td>
-                            <td>${utilisateur.dateInscription}</td>
-                            <td>${utilisateur.dateModif}</td>
-                            <td>${utilisateur.jeton}</td>
-                            <td>${utilisateur.biographie}</td>
-                            <td>${utilisateur.idPreferenceUtilisateur}</td>
-                            <td>${utilisateur.idMedia}</td>
-                            <td>${utilisateur.idRole}</td>
-                            <td>${utilisateur.email}</td>
-                            <td>
-                                <button onclick="editItem(${utilisateur.idUtilisateur})">Edit</button>
-                                <button onclick="deleteItem(${utilisateur.idUtilisateur})">Delete</button>
-                            </td>
-                        </tr>
+                        <form action="formulaire" method="post">
+                            <tr>
+                                <td><input type="hidden" name="idUtilisateur" value="${utilisateur.idUtilisateur}" >${utilisateur.idUtilisateur}</td>
+                                <td>${utilisateur.nom}</td>
+                                <td>${utilisateur.prenom}</td>
+                                <td>${utilisateur.pseudo}</td>
+                                <td>${utilisateur.mdp}</td>
+                                <td>${utilisateur.dateInscription}</td>
+                                <td>${utilisateur.dateModif}</td>
+                                <td>${utilisateur.jeton}</td>
+                                <td>${utilisateur.biographie}</td>
+                                <td>${utilisateur.idPreferenceUtilisateur}</td>
+                                <td>${utilisateur.idMedia}</td>
+                                <td>${utilisateur.idRole}</td>
+                                <td>${utilisateur.email}</td>
+                                <td>
+                                    <button type="submit">Modifier</button>
+                                </td>
+                            </tr>
+                        </form>
                     </c:forEach>
                 </c:if>
             </tbody>
         </table>
+
     </div>
 </body>
 </html>
