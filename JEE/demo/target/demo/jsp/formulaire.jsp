@@ -1,11 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="jakarta.tags.core" %>
+<%@ taglib prefix="fmt" uri="jakarta.tags.fmt" %>
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Page</title>
+    <title>Formulaire Page</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -71,53 +73,50 @@
         <a href="formulaire">Formulaire</a>
     </nav>
     <div class="container">
-
-        <table>
-            <thead>
-                <tr>
-                    <th>idUtilisateur</th>
-                    <th>nom</th>
-                    <th>prenom</th>
-                    <th>pseudo</th>
-                    <th>mdp</th>
-                    <th>dateInscription</th>
-                    <th>dateModif</th>
-                    <th>jeton</th>
-                    <th>bio</th>
-                    <th>idPreferenceUtilisateur</th>
-                    <th>idMedia</th>
-                    <th>idRole</th>
-                    <th>email</th>
-                </tr>
-            </thead>
-            <tbody id="itemList">
-                  <c:if test="${not empty utilisateurs}">
+        <form id="table">
+            <table>
+                <thead>
+                    <tr>
+                        <th>idUtilisateur</th>
+                        <th>nom</th>
+                        <th>prenom</th>
+                        <th>pseudo</th>
+                        <th>mdp</th>
+                        <th>dateInscription</th>
+                        <th>dateModif</th>
+                        <th>jeton</th>
+                        <th>bio</th>
+                        <th>idPreferenceUtilisateur</th>
+                        <th>idMedia</th>
+                        <th>idRole</th>
+                        <th>email</th>
+                    </tr>
+                </thead>
+                <tbody >
                     <c:forEach items="${utilisateurs}" var="utilisateur">
-                        <form action="formulaire" method="post">
                             <tr>
-                                <td><input type="hidden" name="idUtilisateur" value="${utilisateur.idUtilisateur}" >${utilisateur.idUtilisateur}</td>
-                                <td>${utilisateur.nom}</td>
-                                <td>${utilisateur.prenom}</td>
-                                <td>${utilisateur.pseudo}</td>
-                                <td>${utilisateur.mdp}</td>
-                                <td>${utilisateur.dateInscription}</td>
-                                <td>${utilisateur.dateModif}</td>
-                                <td>${utilisateur.jeton}</td>
-                                <td>${utilisateur.biographie}</td>
-                                <td>${utilisateur.idPreferenceUtilisateur}</td>
-                                <td>${utilisateur.idMedia}</td>
-                                <td>${utilisateur.idRole}</td>
-                                <td>${utilisateur.email}</td>
+                                <td><input type="hidden" name="idUtilisateur" value="${utilisateur.idUtilisateur}" ><c:out value="${utilisateur.idUtilisateur}" /></td>
+                                <td><c:out value="${utilisateur.nom}" /></td>
+                                <td><c:out value="${utilisateur.prenom}" /></td>
+                                <td><c:out value="${utilisateur.pseudo}" /></td>
+                                <td><c:out value="${utilisateur.mdp}" /></td>
+                                <td><fmt:formatDate value="${formattedDateInscr_}+${utilisateur.idUtilisateur}" pattern="yyyy/MM/dd HH:mm:ss" /></td>
+                                <td><fmt:formatDate value="${formattedDateModif_}+${utilisateur.idUtilisateur}" pattern="yyyy/MM/dd HH:mm:ss" /></td>
+                                <td><c:out value="${utilisateur.jeton}" /></td>
+                                <td><c:out value="${utilisateur.biographie}" /></td>
+                                <td><c:out value="${utilisateur.idPreferenceUtilisateur}" /></td>
+                                <td><c:out value="${utilisateur.idMedia}" /></td>
+                                <td><c:out value="${utilisateur.idRole}" /></td>
+                                <td><c:out value="${utilisateur.email}" /></td>
                                 <td>
-                                    <button type="submit">Modifier</button>
+                                    <button type="submit" id="modif_${utilisateur.idUtilisateur}">Modifier</button>
+                                    <button type="submit" id="suppr_${utilisateur.idUtilisateur}">Supprimer</button>
                                 </td>
                             </tr>
-                        </form>
                     </c:forEach>
-                </c:if>
-            </tbody>
-        </table>
-
+                </tbody>
+            </table>
+        </form>
     </div>
 </body>
 </html>

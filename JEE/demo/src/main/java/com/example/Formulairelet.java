@@ -3,7 +3,11 @@ package com.example;
 
 
 import java.io.IOException;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 import com.example.DAO.UtilisateursCRUD;
 import jakarta.persistence.EntityManager;
@@ -36,6 +40,32 @@ public class Formulairelet extends HttpServlet {
 
 
         List<Utilisateur> utilisateurs = utilisateursCRUD.findAll();
+        utilisateurs.forEach(user -> {
+            user.getDateInscription();
+            user.getDateModif();
+
+
+
+            // Convertir LocalDateTime en java.util.Date
+
+            //On verifie si getDate est null si oui on mets la date d'aujourd'hui facon Optional
+            LocalDateTime formattedDateInscrLocal = Optional.ofNullable(user)
+                                                .map(Utilisateur::getDateInscription)
+                                                .orElse(LocalDateTime.now());
+            LocalDateTime formattedDateModifLocal = Optional.ofNullable(user)
+                                                .map(Utilisateur::getDateModif)
+                                                .orElse(LocalDateTime.now());
+            Date formattedDateModif = Date.from(formattedDateModifLocal.atZone(ZoneId.systemDefault()).toInstant());
+            Date formattedDateInscr = Date.from(formattedDateInscrLocal.atZone(ZoneId.systemDefault()).toInstant());
+            //façon ternaire
+//            Date formattedDateModif = user.getDateModif() != null ? Date.from(user.getDateModif().atZone(ZoneId.systemDefault()).toInstant()) : new Date();
+//            Date formattedDateInscr = user.getDateInscription() != null ? Date.from(user.getDateInscription().atZone(ZoneId.systemDefault()).toInstant()) : new Date();
+
+            // Passer la date à la JSP
+            request.setAttribute("formattedDateInscr_"+user.getIdUtilisateur(), formattedDateInscr);
+            request.setAttribute("formattedDateModif_"+user.getIdUtilisateur(), formattedDateModif);
+
+        });
         request.setAttribute("utilisateurs", utilisateurs);
 
 
