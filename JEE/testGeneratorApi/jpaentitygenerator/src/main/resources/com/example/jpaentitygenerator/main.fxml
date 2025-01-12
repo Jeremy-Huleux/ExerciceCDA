@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox xmlns:fx="http://javafx.com/fxml" fx:controller="com.example.jpaentitygenerator.MainController" spacing="10" padding="20">
+    <Label text="JPA Entity Generator" style="-fx-font-size: 20px; -fx-font-weight: bold;"/>
+    
+    <TitledPane text="Database Connection" collapsible="false">
+        <VBox spacing="5">
+            <ComboBox fx:id="dbTypeComboBox" promptText="Select Database Type"/>
+            <TextField fx:id="dbUrlField" promptText="jdbc:mysql://localhost:3306"/>
+            <TextField fx:id="usernameField" promptText="Username"/>
+            <PasswordField fx:id="passwordField" promptText="Password"/>
+            <TextField fx:id="dbNameField" promptText="Database name"/>
+            <Button text="Test Connection" onAction="#testConnection"/>
+        </VBox>
+    </TitledPane>
+    
+    <TitledPane text="Output Configuration" collapsible="false">
+        <HBox spacing="5">
+            <TextField fx:id="outputDirField" HBox.hgrow="ALWAYS" editable="false"/>
+            <Button text="Browse" onAction="#browseOutputDir"/>
+        </HBox>
+    </TitledPane>
+    
+    <TitledPane text="Customization Options" collapsible="false">
+        <VBox spacing="5">
+            <CheckBox fx:id="builderAnnotationCheckBox" text="Add @Builder annotation"/>
+            <HBox spacing="5">
+                <Label text="Naming Convention:"/>
+                <ComboBox fx:id="namingConventionComboBox"/>
+            </HBox>
+        </VBox>
+    </TitledPane>
+    
+    <TitledPane text="Generation" collapsible="false">
+        <VBox spacing="5">
+            <Button text="Generate Entities" onAction="#generateEntities"/>
+            <ProgressBar fx:id="progressBar" progress="0.0" maxWidth="Infinity"/>
+        </VBox>
+    </TitledPane>
+</VBox>
+
