@@ -1,0 +1,14 @@
+{
+  "configurations": [
+    {
+      "type": "java",
+      "name": "Spring Boot-SpringBootWebApplicationBootstrapJqueryApplication<spring-boot-web-application-bootstrap-jquery>",
+      "request": "launch",
+      "cwd": "${workspaceFolder}",
+      "mainClass": "com.in28minutes.springboot.tutorial.basics.application.configuration.SpringBootWebApplicationBootstrapJqueryApplication",
+      "projectName": "spring-boot-web-application-bootstrap-jquery",
+      "args": "",
+      "envFile": "${workspaceFolder}/.env"
+    }
+  ]
+}
