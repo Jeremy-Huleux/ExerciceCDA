@@ -1,4 +1,4 @@
-package com.in28minutes.springboot.tutorial.basics.application.configuration.service;
+package com.in28minutes.springboot.tutorial.basics.application.configuration.service.impl;
 
 import java.util.Date;
 import java.util.List;
@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import com.in28minutes.springboot.tutorial.basics.application.configuration.model.Employee;
 import com.in28minutes.springboot.tutorial.basics.application.configuration.repository.EmployeeRepository;
+import com.in28minutes.springboot.tutorial.basics.application.configuration.service.IEmployeeService;
 
 @Service
 public class EmployeeService implements IEmployeeService {

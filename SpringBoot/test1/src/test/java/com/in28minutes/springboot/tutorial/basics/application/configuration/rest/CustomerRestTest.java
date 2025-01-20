@@ -12,7 +12,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.in28minutes.springboot.tutorial.basics.application.configuration.model.Customer;
-import com.in28minutes.springboot.tutorial.basics.application.configuration.service.CustomerService;
+import com.in28minutes.springboot.tutorial.basics.application.configuration.service.impl.CustomerService;
 
 @WebMvcTest(CustomerRest.class)
 public class CustomerRestTest {

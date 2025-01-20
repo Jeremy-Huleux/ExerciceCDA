@@ -1,0 +1,25 @@
+-- DELETE FROM "user" WHERE "user".id = 1;
+-- DELETE FROM "token" ;
+--  INSERT INTO "user" VALUES (1, 'Jérémy', '123456');
+-- INSERT INTO "user" (username, password) VALUES ('Alice', 'abcd1234');
+-- INSERT INTO "user" (username, password) VALUES ('Bob', 'efgh5678');
+-- INSERT INTO "user" (username, password) VALUES ('Charlie', 'ijkl9012');
+-- INSERT INTO "user" (username, password) VALUES ('David', 'mnop3456');
+-- INSERT INTO "user" (username, password) VALUES ('Eve', 'qrst7890');
+-- INSERT INTO "user" (username, password) VALUES ('Frank', 'uvwx1234');
+-- INSERT INTO "user" (username, password) VALUES ('Grace', 'yzab5678');
+-- INSERT INTO "user" (username, password) VALUES ('Hank', 'cdef9012');
+-- INSERT INTO "user" (username, password) VALUES ('Ivy', 'ghij3456');
+-- INSERT INTO "user" (username, password) VALUES ('Jack', 'klmn7890');
+
+-- INSERT INTO "token" (token, user_id) VALUES('test1', 1);
+-- INSERT INTO "token" (token, user_id) VALUES('test2', 2);
+-- INSERT INTO "token" (token, user_id) VALUES('test3', 3);
+-- INSERT INTO "token" (token, user_id) VALUES('test4', 4);
+-- INSERT INTO "token" (token, user_id) VALUES('test5', 5);
+-- INSERT INTO "token" (token, user_id) VALUES('test6', 6);
+-- INSERT INTO "token" (token, user_id) VALUES('test7', 7);
+-- INSERT INTO "token" (token, user_id) VALUES('test8', 8);
+-- INSERT INTO "token" (token, user_id) VALUES('test9', 9);
+-- INSERT INTO "token" (token, user_id) VALUES('test10', 10);
+-- INSERT INTO "token" (token, user_id) VALUES('test11', 11);

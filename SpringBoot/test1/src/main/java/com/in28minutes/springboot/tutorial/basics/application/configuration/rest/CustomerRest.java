@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.in28minutes.springboot.tutorial.basics.application.configuration.model.Customer;
-import com.in28minutes.springboot.tutorial.basics.application.configuration.service.CustomerService;
+import com.in28minutes.springboot.tutorial.basics.application.configuration.service.impl.CustomerService;
 
 
 

@@ -1,4 +1,4 @@
-package com.in28minutes.springboot.tutorial.basics.application.configuration.service;
+package com.in28minutes.springboot.tutorial.basics.application.configuration.service.impl;
 
 import java.util.List;
 import java.util.Optional;
@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.in28minutes.springboot.tutorial.basics.application.configuration.model.Customer;
 import com.in28minutes.springboot.tutorial.basics.application.configuration.repository.CustomerRepository;
+import com.in28minutes.springboot.tutorial.basics.application.configuration.service.ICustomerService;
 
 @Service
 public class CustomerService implements ICustomerService{
