@@ -6,6 +6,8 @@ import javax.crypto.SecretKey;
 
 import org.springframework.stereotype.Component;
 
+import com.in28minutes.springboot.tutorial.basics.application.configuration.model.User;
+
 import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
@@ -28,6 +30,15 @@ public class JwtUtil {
 									.signWith(SECRET_KEY)
 									.compact();
 	}
+	//Création du token d'acces avec l'bjet User
+	public String generationTokenDAccesJwtByObj(User user){
+		return Jwts.builder()
+									.setSubject(user.getUsername())
+									.setIssuedAt(new Date()) //Ajoute la date de la création du token
+									.setExpiration(new Date(System.currentTimeMillis() + EXPIRATION_TIME_ACCES)) // Date d'expiration
+									.signWith(SECRET_KEY)
+									.compact();
+	}
 	//Création du token d'acces
 	public String generationRefreshTokenJwt(String nomUtilisateur){
 		return Jwts.builder()
@@ -37,7 +48,15 @@ public class JwtUtil {
 									.signWith(SECRET_KEY)
 									.compact();
 	}
-
+	//Création du token d'acces avec l'objet User
+	public String generationRefreshTokenJwtByObj(User user){
+		return Jwts.builder()
+									.setSubject(user.getUsername())
+									.setIssuedAt(new Date()) //Ajoute la date de la création du token
+									.setExpiration(new Date(System.currentTimeMillis() + EXPIRATION_TIME_REFRESH)) // Date d'expiration
+									.signWith(SECRET_KEY)
+									.compact();
+	}
 	//Valider un token
 	public boolean validateToken(String token){
 		try{
@@ -48,14 +67,14 @@ public class JwtUtil {
 		}
 	}
 
-	public String extractNomUtilisateur(String token){
-		return Jwts.parserBuilder()
-									.setSigningKey(SECRET_KEY)
-									.build()
-									.parseClaimsJws(token)
-									.getBody()
-									.getSubject();
-	}
+	// public String extractNomUtilisateur(String token){
+	// 	return Jwts.parserBuilder()
+	// 								.setSigningKey(SECRET_KEY)
+	// 								.build()
+	// 								.parseClaimsJws(token)
+	// 								.getBody()
+	// 								.getSubject();
+	// }
 
 
 

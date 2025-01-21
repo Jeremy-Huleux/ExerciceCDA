@@ -18,12 +18,10 @@ public class JwtAuthentificationFiltre extends HttpFilter{
 
 		//On récupére l'entete 
 		String authorisationHeader = requette.getHeader("Authorization");
-
 			if(authorisationHeader != null && authorisationHeader.startsWith("Bearer ")){
 				String token = authorisationHeader.substring(7); // on retirer le bearer du header
 				try {
 						String username = jwtValidator.validationEtRecupUtilisateur(token);
-
 						System.out.println("Utilisateur du token : " + username);
 
 				} catch (Exception e) {

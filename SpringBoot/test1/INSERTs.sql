@@ -1,6 +1,8 @@
--- DELETE FROM "user" WHERE "user".id = 1;
--- DELETE FROM "token" ;
---  INSERT INTO "user" VALUES (1, 'Jérémy', '123456');
+-- -- DELETE FROM "user" WHERE "user".id = 1;
+-- -- DELETE FROM "token" ;
+-- ALTER TABLE "user" DROP COLUMN token; 
+
+--  INSERT INTO "user" (username, password) VALUES ('Jérémy', '123456');
 -- INSERT INTO "user" (username, password) VALUES ('Alice', 'abcd1234');
 -- INSERT INTO "user" (username, password) VALUES ('Bob', 'efgh5678');
 -- INSERT INTO "user" (username, password) VALUES ('Charlie', 'ijkl9012');
