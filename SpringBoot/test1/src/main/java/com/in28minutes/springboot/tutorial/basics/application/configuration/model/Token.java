@@ -21,6 +21,9 @@ public class Token {
 	@Column(name = "\"token\"")
 	private String token;
 
+	@Column(name= "\"deviceinfo\"")
+	private String deviceInfo;
+
 	@ManyToOne
 	@JoinColumn(name="\"user_id\"")
 	private User user;
