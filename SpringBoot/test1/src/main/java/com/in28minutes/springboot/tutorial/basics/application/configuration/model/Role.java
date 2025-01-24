@@ -1,6 +1,9 @@
 package com.in28minutes.springboot.tutorial.basics.application.configuration.model;
 
+import java.util.HashSet;
 import java.util.Set;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -23,7 +26,8 @@ public class Role {
 	private String role;
 
 	@ManyToMany(mappedBy= "roles", fetch = FetchType.LAZY)//Ligne qui signifie que les données ne sont chargée que si necessaire (optimisation)
-	private Set<User> users;
+	@JsonIgnore
+	private Set<User> users = new HashSet<>();
 
 
 	public Long getId() {
@@ -49,8 +53,5 @@ public class Role {
 	public void setUsers(Set<User> users) {
 		this.users = users;
 	}
-
-
-
 
 }

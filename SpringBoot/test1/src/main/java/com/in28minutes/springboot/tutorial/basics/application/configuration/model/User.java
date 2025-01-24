@@ -1,6 +1,9 @@
 package com.in28minutes.springboot.tutorial.basics.application.configuration.model;
 
+import java.util.HashSet;
 import java.util.Set;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -33,9 +36,10 @@ public class User {
 	@JoinTable(
 		name = "user_roles",
 		joinColumns = @JoinColumn(name = "user_id"),
-		inverseJoinColumns = @JoinColumn(name = "role_id")
+		inverseJoinColumns = @JoinColumn(name = "roles_id")
 	)
-	private Set<Role> roles;
+	@JsonIgnore
+	private Set<Role> roles = new HashSet<>();
 	
 	public User(){
 		super();
@@ -71,6 +75,16 @@ public class User {
 	public void setPassword(String password) {
 		this.password = password;
 	}
-	
+
+	public Set<Role> getAllRoles() {
+		return this.roles;
+	}
+
+	public void setAllRoles(Set<Role> roles) {
+		this.roles = roles;
+	}
+	public void addRole(Role role) {
+		this.roles.add(role);
+	}
 
 }

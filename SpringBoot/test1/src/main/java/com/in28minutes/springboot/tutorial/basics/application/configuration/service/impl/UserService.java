@@ -2,11 +2,14 @@ package com.in28minutes.springboot.tutorial.basics.application.configuration.ser
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.in28minutes.springboot.tutorial.basics.application.configuration.model.Role;
 import com.in28minutes.springboot.tutorial.basics.application.configuration.model.User;
+import com.in28minutes.springboot.tutorial.basics.application.configuration.repository.RoleRepository;
 import com.in28minutes.springboot.tutorial.basics.application.configuration.repository.UserRepository;
 import com.in28minutes.springboot.tutorial.basics.application.configuration.service.IUserService;
 
@@ -15,11 +18,13 @@ public class UserService implements IUserService {
 
 	@Autowired
 	private UserRepository usrRepo;
-
+	@Autowired
+	private RoleRepository roleRepo;
 
 // public UserService(UserRepository usrRepo){
 // 	this.usrRepo = usrRepo;
 // }
+
 
 	@Override
 	public void createUser(User user) {
@@ -53,6 +58,30 @@ public class UserService implements IUserService {
 	public Optional<User> findUserByUsername(String username) {
 		// return usrRepo.findByUsername(username);
 		return usrRepo.findById(2L);
+	}
+
+	@Override
+	public void addRoleToUser(User user, Role role) {
+		User userAModif = usrRepo.findByUsername(user.getUsername())
+													.orElseThrow(() -> new RuntimeException("User non trouvé"));
+		Role roleAAjouter = roleRepo.findByRole(role.getRole())
+													.orElseThrow(() -> new RuntimeException("Role non trouvé"));
+		userAModif.addRole(roleAAjouter);
+		usrRepo.save(userAModif);
+	
+	}
+
+	@Override
+	public void addRoleToUserStringProperty(String user, String role) {
+		// Optional<User> userAModif = usrRepo.findByUsername(user.getUsername());
+		// Optional<Role> roleAAjouter = roleRepo.findByRoleName(role)
+	}
+
+	@Override
+	public Set<Role> getAllRolesByUser(User user) {
+		User usrTrouve = usrRepo.findByUsername(user.getUsername())
+													.orElseThrow(() -> new RuntimeException("User non trouvé"));
+		return usrTrouve.getAllRoles();
 	}
 
 }

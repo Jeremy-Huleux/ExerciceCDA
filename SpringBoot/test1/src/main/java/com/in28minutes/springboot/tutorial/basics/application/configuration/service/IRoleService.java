@@ -13,5 +13,7 @@ public interface IRoleService {
 	public void deleteAllRoleFromUser (User user, Set<Role> roles);
 	public void updateRole(User user, Role roleModify, Role newRole);
 	public Set<Role> getAllRolesFromUser (User user);
+	public Set<Role> getAllRoles();
+	public Set<User> getAllUsersFromRole(Role role);
 
 }
