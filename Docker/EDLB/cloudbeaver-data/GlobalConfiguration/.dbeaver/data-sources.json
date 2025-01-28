@@ -1,0 +1,40 @@
+{
+	"folders": {},
+	"connections": {
+		"mysql8-194ad6b733a-592d64e8070804c4": {
+			"provider": "mysql",
+			"driver": "mysql8",
+			"name": "MySQL@edlbMySQL",
+			"save-password": true,
+			"configuration": {
+				"host": "edlbMySQL",
+				"port": "3306",
+				"database": "edlb",
+				"url": "jdbc:mysql://edlbMySQL:3306/edlb",
+				"configurationType": "MANUAL",
+				"type": "dev",
+				"closeIdleConnection": true,
+				"auth-model": "native",
+				"bootstrap": {
+					"autocommit": true
+				}
+			}
+		}
+	},
+	"connection-types": {
+		"dev": {
+			"name": "Development",
+			"color": "255,255,255",
+			"description": "Regular development database",
+			"auto-commit": true,
+			"confirm-execute": false,
+			"confirm-data-change": false,
+			"smart-commit": false,
+			"smart-commit-recover": true,
+			"auto-close-transactions": true,
+			"close-transactions-period": 1800,
+			"auto-close-connections": true,
+			"close-connections-period": 14400
+		}
+	}
+}

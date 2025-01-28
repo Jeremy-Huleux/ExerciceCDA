@@ -1,0 +1,27 @@
+services:
+  db:
+    image: mariadb
+    container_name: edlbMySQL
+    restart: always
+    volumes:
+      - ${LOG_DIR_MARIADB}:/var/log/mysql
+      - ${MARIADB_DUMP_DIR}:/docker-entrypoint-initdb.d
+    environment:
+      MARIADB_ROOT_PASSWORD: ${MARIADB_ROOT_PASSWORD}
+      MARIADB_DATABASE: ${MARIADB_DATABASE}
+      MARIADB_USER: ${MARIADB_USER}
+      MARIADB_PASSWORD: ${MARIADB_PASSWORD}
+    ports:
+      - "9807:3306"
+  #Installation de dbeaver pour gérer la bdd
+  dbeaver:
+    image: dbeaver/cloudbeaver:latest
+    container_name: cloudbeaver
+    ports:
+      - "8081:8978"
+    volumes:
+      - ./cloudbeaver-data:/opt/cloudbeaver/workspace # Stocke les données localement pour persistance
+    environment:
+      - CB_ADMIN_NAME=${DBEAVER_NAME}
+      - CL_ADMIN_PASSWORD=${DBEAVER_PASSWORD}
+    restart: unless-stopped # relance automatiquement le conteneur si necessaire
