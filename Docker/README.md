@@ -32,8 +32,9 @@ Ce dépôt comprend des exemples et des tests pour :
 
 ```
 
-└── sakila-db/ # Exemple de configuration Docker Compose en Postregres et Mysql (Fournis par https://github.com/ludovic-esperce)
-  ├── MysQL/ # Ensemble de fichier pour créer la BDD MySQL pour l'initialisation et la gestion de la BDD
-  ├── PostgreSQL/ # Ensemble de fichier pour créer la BDD Postgres pour l'initialisation et la gestion de la BDD
-  └──sakila.svg # Image de présentation de la BDD
+├── sakila-db/ # Exemple de configuration Docker Compose en Postregres et Mysql (Fournis par https://github.com/ludovic-esperce)
+| ├── MysQL/ # Ensemble de fichier pour créer la BDD MySQL pour l'initialisation et la gestion de la BDD
+| ├── PostgreSQL/ # Ensemble de fichier pour créer la BDD Postgres pour l'initialisation et la gestion de la BDD
+| └──sakila.svg # Image de présentation de la BDD
+└── edlb/ # création de a à z d'un docker compose pour le projet EDLB (creation de base MYSQL avec données + installation de DBeaver)
 ```

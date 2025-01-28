@@ -25,12 +25,15 @@ services:
           # copie du script SQL de création de base de données sur le conteneur
           - ./db/dump/V1.0__sakila-schema.sql:/docker-entrypoint-initdb.d/V1.0__sakila-schema.sql
           - ./db/dump/V1.2__sakila-data.sql:/docker-entrypoint-initdb.d/V1.2__sakila-data.sql
-    pgadmin:
-      image: dpage/pgadmin4
+    dbeaver:
+      image: dbeaver/cloudbeaver:latest
+      container_name: cloudbeaver
       ports:
-        - "8081:80"
+        - "8081:8978"
+      volumes:
+        - ./cloudbeaver-data:/opt/cloudbeaver/workspace # Stocke les données localement pour persistance
       environment:
-        PGADMIN_DEFAULT_EMAIL: ${PGADMIN_EMAIL}
-        PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_PASSWORD}
-        PGADMIN_CONFIG_SERVER_MODE: 'False'
+        - CB_ADMIN_NAME=${DBEAVER_NAME}
+        - CL_ADMIN_PASSWORD=${DBEAVER_PASSWORD}
+      restart: unless-stopped # relance automatiquement le conteneur si necessaire
 
