@@ -140,7 +140,7 @@ export function getUser(id:number, users:JSON): User | null {
   if(typeof unUserObject === "undefined"){
     return null;
   }else{
-    let newUser: User = {name:"default", verified:false};
+    const newUser: User = {name:"default", verified:false};
     Object.entries(unUserObject).forEach(([clef,valeur]) => {
         if(clef === "name") newUser.name = valeur;
         if(clef === "address") newUser.address = valeur;

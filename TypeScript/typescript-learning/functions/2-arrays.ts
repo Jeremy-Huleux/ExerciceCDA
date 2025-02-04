@@ -13,8 +13,8 @@ export function getFirstNumber(a:number[]): number {
  * @param songs Liste de chansons
  * @returns La dernière chaîne de caractères
  */
-export function getLastSongPlayed(a:string[]): string | undefined {
-  return a.at(-1);
+export function getLastSongPlayed(songs:string[]): string | undefined {
+  return songs.at(-1);
 }
 
 /**
@@ -36,8 +36,8 @@ export function findLongestWord(a:string[]): string {
  * @param length La taille du tableau à créer (number)
  * @param defaultValue La valeur par défaut (string)
  */
-export function fillArrayWithDefaultValue(a:number, b:string): string[] {
-  const tableau: string[] = new Array(a).fill(b);
+export function fillArrayWithDefaultValue(length:number, defaultValue:string): string[] {
+  const tableau: string[] = new Array(length).fill(defaultValue);
   return tableau;
 }
 
@@ -51,9 +51,9 @@ export function fillArrayWithDefaultValue(a:number, b:string): string[] {
  * @param arrayToSort Le tableau de chaînes de caractères à trier
  * @returns Le tableau trié
  */
-export function sortBySize(a:string[]): string[] {
-  const b:string[] = new Array(a.length);
-  a.sort(
+export function sortBySize(arrayToSort:string[]): string[] {
+  const b:string[] = new Array(arrayToSort.length);
+  arrayToSort.sort(
     (a,b) => a.length - b.length 
   ).forEach((valeur,index) => b[index] = valeur);
   return b;
@@ -67,8 +67,8 @@ export function sortBySize(a:string[]): string[] {
  * @param array Utilisation d'un tableau avec types multiples : https://www.geeksforgeeks.org/defining-array-with-multiple-types-in-typescript/
  * @returns Le résultat de la somme de type "number"
  */
-export function sumStringsAndNumbers(a:(string | number)[]): number {
-  return a.reduce<number>((accumulateur, valeurActuel) => typeof valeurActuel === "string" ? Number(valeurActuel) + accumulateur : valeurActuel + accumulateur, 0);
+export function sumStringsAndNumbers(array:(string | number)[]): number {
+  return array.reduce<number>((accumulateur, valeurActuel) => typeof valeurActuel === "string" ? Number(valeurActuel) + accumulateur : valeurActuel + accumulateur, 0);
 }
 
 /**
@@ -80,8 +80,8 @@ export function sumStringsAndNumbers(a:(string | number)[]): number {
  * @param array Un tableau pouvant contenir des "string" mais également des éléments "null"
  * @returns Tableau de chaînes de caractères résultat
  */
-export function stringsOnly(a:string[]): string[] {
-  return a.filter((valeur) => typeof valeur === "string" ? true : false);
+export function stringsOnly(array:string[]): string[] {
+  return array.filter((valeur) => typeof valeur === "string" ? true : false);
  }
 
 // ----------- TUPLES -----------
@@ -96,8 +96,8 @@ export function stringsOnly(a:string[]): string[] {
  * @param userInfo Un tuple contenant les informations utilisateur
  * @returns Le nom utilisateur généré.
  */
-export function generateUsername(a:[string,string,string]): string {
-  return (a[1] + a[0].substring(0, 2) + "_" + a[2]).toLowerCase();
+export function generateUsername(userInfo:[string,string,string]): string {
+  return (userInfo[1] + userInfo[0].substring(0, 2) + "_" + userInfo[2]).toLowerCase();
 }
 
 /**
@@ -130,20 +130,20 @@ export enum Direction {
  * @param direction Enum présentant une direction (North, South, East, West)
  * @returns Les nouvelles coordonnées (tuple)
  */
-export function getNextMapCoord(a:[number, number], b:Direction): [number, number] { 
+export function getNextMapCoord(coordinates:[number, number], b:Direction): [number, number] { 
   switch(b){
     case Direction.North:
-      a[1] += 1;
+      coordinates[1] += 1;
       break;
     case Direction.South:
-      a[1] -= 1;
+      coordinates[1] -= 1;
       break;
     case Direction.East:
-      a[0] += 1;
+      coordinates[0] += 1;
       break;
     case Direction.West:
-      a[0] -= 1;
+      coordinates[0] -= 1;
       break;
   }
-  return a;
+  return coordinates;
 }

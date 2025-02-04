@@ -47,8 +47,11 @@ export function addNumbers(a: number, b:number): number {
  * @param b 2ème nombre, obligatoire
  * @param c 3ème nombre, optionnel
  */
-export function sumNumbers(a: number, b:number, ...numbers: number[]): number {
-  return numbers.reduce((acc, val) => acc + val, a+b);
+// export function sumNumbers(a: number, b:number, ...numbers: number[]): number {
+//   return numbers.reduce((acc, val) => acc + val, a+b);
+// }
+export function sumNumbers(a: number, b:number, c?: number): number {
+  return a+b+(c ?? 0);
 }
 
 /**
@@ -64,8 +67,8 @@ export function sumNumbers(a: number, b:number, ...numbers: number[]): number {
 // export function greetFullName(...varchars: string[]): string {
 //   return varchars.reduce((acc, val) => acc + " " + val, "Hello ");
 // }
-export function greetFullName(a:string, b:string, c?:string): string {
-  return c != null || "" ? "Hello " + a + " " + c + " " + b : "Hello " + a + " " + b;
+export function greetFullName(firstName:string, lastName:string, middleName?:string): string {
+  return middleName != null || "" ? "Hello " + firstName + " " + middleName + " " + lastName : "Hello " + firstName + " " + lastName;
 }
 
 
