@@ -26,9 +26,7 @@ export function getLastSongPlayed(songs:string[]): string | undefined {
  * Pour apprendre à vous servir de "reduce" : https://medium.com/free-code-camp/three-ways-to-find-the-longest-word-in-a-string-in-javascript-a2fb04c9757c#720b
  */
 export function findLongestWord(a:string[]): string {
-  return a.reduce((accumulateur,valeurCourante) => {
-                  return  accumulateur.length > valeurCourante.length ? accumulateur : valeurCourante;
-  } , "");
+  return a.reduce((accumulateur,valeurCourante) => (accumulateur.length > valeurCourante.length ? accumulateur : valeurCourante), "");
 }
 
 /**
