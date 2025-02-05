@@ -96,7 +96,7 @@ export function stringsOnly(array:string[]): string[] {
  * @param userInfo Un tuple contenant les informations utilisateur
  * @returns Le nom utilisateur généré.
  */
-export function generateUsername(userInfo:[string,string,string]): string {
+export function generateUsername(userInfo:[string,string,number]): string {
   return (userInfo[1] + userInfo[0].substring(0, 2) + "_" + userInfo[2]).toLowerCase();
 }
 
