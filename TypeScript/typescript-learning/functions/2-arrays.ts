@@ -4,7 +4,8 @@
  * Retourne -1 si le tableau est vide.
  */
 export function getFirstNumber(a:number[]): number {
-  return a[0];
+  return typeof a === "undefined" || "" ? -1 : a[0];
+  
 }
 
 /**
