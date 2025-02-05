@@ -51,11 +51,12 @@ export function fillArrayWithDefaultValue(length:number, defaultValue:string): s
  * @returns Le tableau trié
  */
 export function sortBySize(arrayToSort:string[]): string[] {
-  const b:string[] = new Array(arrayToSort.length);
-  arrayToSort.sort(
-    (a,b) => a.length - b.length 
-  ).forEach((valeur,index) => b[index] = valeur);
-  return b;
+  // const b:string[] = new Array(arrayToSort.length);
+  // arrayToSort.sort(
+  //   (a,b) => a.length - b.length 
+  // ).forEach((valeur,index) => b[index] = valeur);
+  // return b;
+  return arrayToSort.map(e=>e).sort((a,b) => a.length - b.length );
 }
 
 // ----------- TABLEAUX AVEC DES UNIONS -----------
