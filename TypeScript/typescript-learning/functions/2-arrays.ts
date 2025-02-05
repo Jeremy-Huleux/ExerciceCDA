@@ -4,7 +4,7 @@
  * Retourne -1 si le tableau est vide.
  */
 export function getFirstNumber(a:number[]): number {
-  return typeof a === "undefined" || "" ? -1 : a[0];
+  return a === undefined || null ? -1 : a[0];
   
 }
 
@@ -80,10 +80,9 @@ export function sumStringsAndNumbers(array:(string | number)[]): number {
  * @param array Un tableau pouvant contenir des "string" mais également des éléments "null"
  * @returns Tableau de chaînes de caractères résultat
  */
-export function stringsOnly(array:string[]): string[] {
-  return array.filter((valeur) => typeof valeur === "string" ? true : false);
+export function stringsOnly(array:(string | null)[]): string[] {
+  return array.filter((valeur): valeur is string => valeur != null);
  }
-
 // ----------- TUPLES -----------
 
 /**
