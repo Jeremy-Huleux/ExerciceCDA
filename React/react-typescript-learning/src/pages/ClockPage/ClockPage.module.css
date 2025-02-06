@@ -1,0 +1,8 @@
+/* Style appliqué aux éléments graphique de la page "ClockPage" */
+/* Plus d'informations sur les modules CSS : https://create-react-app.dev/docs/adding-a-css-modules-stylesheet/ */ 
+.clockContainer {
+    background-color: #383838;
+
+    padding: 10px;
+    border-radius: 10px;
+}
