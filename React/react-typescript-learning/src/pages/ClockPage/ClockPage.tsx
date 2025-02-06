@@ -9,7 +9,7 @@ const ClockPage = () => {
 
     // TODO déclarer un state permettant de stocker la date et l'heure actuelle
     // Indice sur ce qu'il faudrait stocker : https://developer.mozilla.org/fr/docs/Web/JavaScript/Reference/Global_Objects/Date
-    const [horloge, horlogeage] = useState<Date>(new Date());
+    const [horloge, setHorloge] = useState<Date>(new Date());
     const interval = useRef<number | null>(null);
 
     useEffect(() => {
@@ -20,7 +20,7 @@ const ClockPage = () => {
      */
     function handleStartClick() {
         interval.current = setInterval(() => {
-            horlogeage(() => new Date());
+            setHorloge(() => new Date());
         },1000);
     }
 
@@ -31,7 +31,7 @@ const ClockPage = () => {
     function handleStopClick(){
         if(interval.current != undefined){
             clearInterval(interval.current);
-            horlogeage(() => new Date());
+            setHorloge(() => new Date());
         }
     }
 

@@ -1,8 +1,63 @@
 .userCard {
-    background-color: #383838;
+    background: linear-gradient(135deg, #4b5cf8, #e52e71); /* Dégradé vibrant */
     padding: 20px;
+    border-radius: 15px;
+    color: white;
+    width: 100%;
+    max-width: 280px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+    text-align: center;
+    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+    font-family: Arial, sans-serif;
+    position: relative;
+}
 
-    border-radius: 10px;
+.userCard:hover {
+    transform: translateY(-10px);
+    box-shadow: 0px 10px 20px rgb(255, 80, 226);
+}
 
-    /* TODO adapter le css pour un rendu OK */
+.userCard h3 {
+    margin: 0;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.userCard p {
+    margin-top: 5px;
+    font-size: 14px;
+    opacity: 0.9;
+}
+.userCard a {
+    display: inline-block;
+    margin-top: 10px;
+    padding: 8px 15px;
+    background: linear-gradient(135deg, #00c6ff, #0072ff); 
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+    border-radius: 8px;
+    transition: background 0.3s ease-in-out, transform 0.2s ease-in-out;
+}
+.userCard a:hover {
+    background: linear-gradient(135deg, #0072ff, #00c6ff); /* Inversion des couleurs */
+    transform: scale(1.1);
+}
+@media (max-width: 768px) {
+    .userCard {
+        width: 100%;
+        max-width: 100%;
+    }
+}
+
+@media (min-width: 768px) and (max-width: 1024px) {
+    .userCard {
+        width: 45%;
+    }
+}
+
+@media (min-width: 1024px) {
+    .userCard {
+        width: 30%;
+    }
 }

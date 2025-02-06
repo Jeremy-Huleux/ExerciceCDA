@@ -1,5 +1,10 @@
 .usersContainer {
     display: flex;
-    flex-direction: column;
-    gap: 10px;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    gap: 20px;
+    padding: 20px;
+    background: linear-gradient(135deg, #1e1e2f, #3d3d5c); /* Dégradé moderne */
+    min-height: 100vh; /* Pleine hauteur pour un bel affichage */
+    align-items: center;
 }
